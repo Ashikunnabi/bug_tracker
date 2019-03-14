@@ -19,4 +19,8 @@ from .views import *
 
 urlpatterns = [
     path('', index, name='pm_index'),
+    path('project/add', project_add, name='pm_project_add'),
+    path('project/detail/<int:id>', project_details, name='pm_project_details'),
+    path('employee/add', employee_add, name='pm_employee_add'),
+    path('employee/detail', employee_details, name='pm_employee_details'),
 ]

@@ -1,0 +1,163 @@
+{% extends 'project_manager/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+
+    <div class="col-sm-12">
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Success</span> You successfully read this important alert message.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>		
+</div>        
+
+<div class="col-lg-12">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">New Employee Add</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse no-show" id="collapseCardExample">
+      <div class="card-body">                    
+        <form>
+          <div class="form-group">
+            <label for="EmployeeFirstName">First Name</label>
+            <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter First Name">
+            <small id="clientNameHelp" class="form-text text-muted">First name should contain ( { A-Z }, { a-z }, { 0-9 }, { . } )</small>
+          </div>
+  <div class="form-group">
+            <label for="EmployeeLastName">Last Name</label>
+            <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Last Name">
+            <small id="clientNameHelp" class="form-text text-muted">Last name should contain ( { A-Z }, { a-z }, { 0-9 }, { . } )</small>
+          </div>
+          <div class="form-group">
+            <label for="EmployeePhone">Phone Number</label>
+            <input type="text" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" placeholder="Enter Phone Number">
+          </div>
+  <div class="form-group">
+            <label for="EmployeeEmail">Email</label>
+            <input type="text" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" placeholder="Enter Email">
+          </div>
+  <div class="form-group">
+            <label for="EmployeePresentAddress">present Address</label>
+            <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Present Address">
+          </div>
+  <div class="form-group">
+            <label for="EmployeePermanentAddress">present Address</label>
+            <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Permanent Address">
+          </div>
+  <div class="form-group">
+            <label for="EmployeeNID">NID No.</label>
+            <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter NID No.">
+          </div>
+  <div class="form-group">
+            <label for="Employeedob">Date of Birth</label>
+            <input type="date" class="form-control" id="examplePossibleBugs" placeholder="Date of Birth">
+          </div>
+          <div class="form-group">
+            <label for="EmployeeDesignation">Designation</label>
+            <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Designation">
+          </div>
+  <div class="form-group">
+            <label for="EmployeeSkill">Skill</label>
+            <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Employee Skill">
+          </div>
+  <div class="form-group">
+            <label for="EmployeePermanentAddress">Change Password</label>
+            <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter New Password">
+          </div>
+          <div class="form-group">
+          <label for="EmployeeMaritalStatus">Marital Status</label>
+                
+                     <select name="select" id="select" class="form-control">
+                            <option value="0">Please select</option>
+                            <option value="1">Married</option>
+          <option value="2">Unmarried</option>
+                     </select>
+                
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>     
+
+<div class="col-lg-12">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Employee Details</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse show" id="collapseCardExample">
+      <div class="card-body"> 
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Phone no.</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Skill</th>
+    <th scope="col">See more</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+    <td>@mdo</td> 
+              <td>@mdo</td>                      
+              <td><a href=""><i class="fas fa-eye"></i></a></td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+    <td>@mdo</td> 
+              <td>@fat</td>
+              <td><a href=""><i class="fas fa-eye"></i></a></td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colspan="2">Larry the Bird</td>
+    <td>@mdo</td> 
+              <td>@twitter</td>
+              <td><a href=""><i class="fas fa-eye"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

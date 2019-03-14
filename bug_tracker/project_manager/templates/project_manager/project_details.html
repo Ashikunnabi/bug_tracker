@@ -1,0 +1,85 @@
+{% extends 'project_manager/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+
+    <div class="col-sm-12">
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Success</span> You successfully read this important alert message.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>		
+</div>    
+                                        <!-- Widgets 01 --> 
+  
+    <div class="col-lg-12">
+          <div class="card-body">                    
+            <form>
+              <div class="form-group">
+                <label for="exampleClientName">Company Name</label>
+                <input type="text" class="form-control" id="clientName" aria-describedby="clientNameHelp" value="{{project.client.name}}">
+                <small id="clientNameHelp" class="form-text text-muted">Company name should contain ( { A-Z }, { a-z }, { 0-9 }, { . } )</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleClientPhone">Phone Number</label>
+                <input type="text" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" value="{{project.client.phone_number}}">
+              </div>
+              <div class="form-group">
+                <label for="exampleProjectName">Project Name</label>
+                <input type="text" class="form-control" id="projectName" aria-describedby="projectNameHelp" value="{{project.name}}">
+                <small id="projectNameHelp" class="form-text text-muted">Project name should unique</small>
+              </div>
+              <div class="form-group">
+                <label for="examplePossibleBugs">Possible Bugs</label>
+                                
+                <select class="custom-select" multiple>                
+                {% for bug in bugs %}
+                  {% for possible_bug in project.possible_bugs.all %}
+                    {% if bug.id == possible_bug.id %}
+                      <option style="color:blue" selected >{{possible_bug.name}}</option>
+                    {% else %}
+                      <option >{{bug.name}}</option>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}                
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleTestingCost">Testing Cost</label>
+                <input type="text" class="form-control" id="exampleTestingCost" value="{{project.cost}}">
+              </div>
+              <div class="form-group">
+                <label for="examplePossibleBugs">Deadline</label>
+                <input type="text" class="form-control" id="examplePossibleBugs" value="{{project.deadline|date}}"></br>
+                <input type="text" class="form-control" id="examplePossibleBugs" value="{{project.deadline|time}}">
+              </div>
+
+              <button type="submit" class="btn btn-secondary">Delete</button>
+              <button type="submit" class="btn btn-primary" style="float:right">Save change</button>
+            </form>
+          </div>
+        </div>
+{% endblock %}
