@@ -27,7 +27,7 @@ class Project(models.Model):
     possible_bugs   = models.ManyToManyField(Bug)
     cost            = models.IntegerField()
     deadline        = models.DateTimeField(auto_now=False, auto_now_add=False)
-    status          = models.CharField(max_length=1, choices=STATUS)
+    status          = models.CharField(max_length=1, choices=STATUS, default='2')
     order_at        = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

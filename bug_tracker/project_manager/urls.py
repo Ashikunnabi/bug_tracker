@@ -19,8 +19,19 @@ from .views import *
 
 urlpatterns = [
     path('', index, name='pm_index'),
+    
     path('project/add', project_add, name='pm_project_add'),
     path('project/detail/<int:id>', project_details, name='pm_project_details'),
+    path('project/delete/<int:id>', project_delete, name='pm_project_delete'),
+    
+    path('bug/add', bug_add, name='pm_bug_add'),
+    path('bug/detail/<int:id>', bug_details, name='pm_bug_details'),
+    path('bug/delete/<int:id>', bug_delete, name='pm_bug_delete'),
+    
+    path('client/add', client_add, name='pm_client_add'),
+    path('client/detail/<int:id>', client_details, name='pm_client_details'),
+    path('client/delete/<int:id>', client_delete, name='pm_client_delete'),
+    
     path('employee/add', employee_add, name='pm_employee_add'),
     path('employee/detail', employee_details, name='pm_employee_details'),
 ]

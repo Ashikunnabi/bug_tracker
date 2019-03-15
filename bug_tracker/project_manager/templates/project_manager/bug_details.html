@@ -1,0 +1,71 @@
+{% extends 'project_manager/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+  {% if success_message %}
+    <div class="col-sm-12">
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Successfully</span> {{success_message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>	
+  {% endif %}          
+  {% if error_message %}
+    <div class="col-sm-12">
+        <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Failed</span> {{error_message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>	
+  {% endif %}  		
+</div>    
+                                        <!-- Widgets 01 --> 
+  
+<div class="col-lg-12">
+  <div class="card-body">                    
+    <form action="{% url 'pm_bug_details' bug.id %}" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="projectName">Bug Name</label>
+        <input type="text" name="bug_name" class="form-control" id="bugName" aria-describedby="projectNameHelp" value="{{bug.name}}">
+        <small id="projectNameHelp" class="form-text text-muted">Project name should unique</small>
+      </div>
+      <div class="form-group">
+        <label for="">Description</label>
+        <input type="text" name="bug_description" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" value="{{bug.description}}">
+      </div>
+      <button type="submit" class="btn btn-primary" style="float:right">Save change</button>
+    </form>
+    
+      <form action="{% url 'pm_bug_delete' bug.id %}" method="POST">
+        {% csrf_token %}   
+        <button type="submit" class="btn btn-secondary">Delete</button>
+      </form>
+  </div>
+ </div>
+{% endblock %}

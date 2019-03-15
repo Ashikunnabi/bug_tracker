@@ -50,48 +50,22 @@
           <div class="card shadow mb-4">
             <!-- Card Header - Accordion -->
             <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
-              <h6 class="m-0 font-weight-bold text-primary">New Project Add</h6>
+              <h6 class="m-0 font-weight-bold text-primary">New Bug Add</h6>
             </a>
             <!-- Card Content - Collapse -->
             <div class="collapse no-show" id="collapseCardExample">
               <div class="card-body">                    
-                <form action="{% url 'pm_project_add' %}" method="POST">
+                <form action="{% url 'pm_bug_add' %}" method="POST">
                 {% csrf_token %}
                   <div class="form-group">
-                    <label for="possibleBugs">Company Name</label>                                    
-                    <select  name="company_name" class="custom-select" id="clientName">                
-                    {% for client in clients %}
-                      <option value="{{client.id}}">{{client.name}}</option>
-                    {% endfor %}                
-                    </select>
+                    <label for="projectName">Bug Name</label>
+                    <input type="text" name="bug_name" class="form-control" id="projectName" placeholder="Enter Bug Name">
+                    <small id="projectNameHelp" class="form-text text-muted">Bug name should unique</small>
                   </div>
                   <div class="form-group">
-                    <label for="projectName">Project Name</label>
-                    <input type="text" name="project_name" class="form-control" id="projectName" placeholder="Enter Project Name">
-                    <small id="projectNameHelp" class="form-text text-muted">Project name should unique</small>
+                    <label for="projectName">Bug Description</label>
+                    <input type="text" name="bug_description" class="form-control" id="projectName" placeholder="Enter Bug Description">
                   </div>
-                  <div class="form-group">
-                    <label for="projectName">Project Description</label>
-                    <input type="text" name="project_description" class="form-control" id="projectName" placeholder="Enter Project Description">
-                  </div>
-                  <div class="form-group">
-                    <label for="possibleBugs">Possible Bugs</label>                                    
-                    <select  name="possible_bugs" class="custom-select" multiple>                
-                    {% for bug in bugs %}
-                      <option value="{{bug.id}}">{{bug.name}}</option>
-                    {% endfor %}                
-                    </select>
-                  </div>
-				          <div class="form-group">
-                    <label for="testingCost">Testing Cost</label>
-                    <input type="text" name="testing_cost" class="form-control" id="testingCost" placeholder="Enter coste">
-                  </div>
-                  <div class="form-group">
-                    <label for="">Deadline</label>
-                    <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" ></br>
-                    <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs">
-                  </div>
-
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
               </div>
@@ -104,7 +78,7 @@
           <div class="card shadow mb-4">
             <!-- Card Header - Accordion -->
             <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
-              <h6 class="m-0 font-weight-bold text-primary">Project Details</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Bug Details</h6>
             </a>
             <!-- Card Content - Collapse -->
             <div class="collapse show" id="collapseCardExample">
@@ -113,40 +87,20 @@
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
-                      <th scope="col">Company Name</th>
-                      <th scope="col">Project Name</th>
-                      <th scope="col">Deadline</th>
-                      <th scope="col">Status</th>
+                      <th scope="col">Bug Name</th>
+                      <th scope="col">Description</th>
                       <th scope="col">See More</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for project in projects %}
+                    {% for bug in bugs %}
                     <tr>
                       <th scope="row">{{ forloop.counter }}</th>
-                      <td>{{ project.client.name }}</td>
-                      <td>{{ project.name }}</td>	  
-                      <td>{{ project.deadline }}</td>	  
-                      <td>{{ project.get_status_display }}</td>	  
-                      <td><a href="{% url 'pm_project_details' project.id %}"><i class="fas fa-eye"></i></a></td>
+                      <td>{{ bug.name }}</td>	  
+                      <td>{{ bug.description }}</td>	   
+                      <td><a href="{% url 'pm_bug_details' bug.id %}"><i class="fas fa-eye"></i></a></td>
                     </tr>
                     {% endfor %}
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-					            <td>Thornton</td>
-                      <td>@fat</td>
-                      <td><a href=""><i class="fas fa-eye"></i></a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry the Bird</td>
-                      <td>@twitter</td>
-                      <td>@ffgfat</td>
-                      <td>@fat</td>
-                      <td><a href=""><i class="fas fa-eye"></i></a></td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
