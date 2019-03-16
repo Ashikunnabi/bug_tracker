@@ -7,6 +7,30 @@ class Client(models.Model):
     
     def __str__(self):
         return self.name
+        
+        
+class Employee(models.Model):
+    STATUS = (
+        ('1', 'Married'),
+        ('2', 'Unmarried'),
+    )
+    employee_id          = models.CharField(max_length=50)
+    change_password      = models.CharField(max_length=50)
+    first_name           = models.CharField(max_length=50)
+    last_name            = models.CharField(max_length=50)
+    phone_number         = models.CharField(max_length=15)
+    email                = models.EmailField()
+    present_address      = models.CharField(max_length=200)
+    permanent_address    = models.CharField(max_length=200)
+    nid                  = models.IntegerField()
+    dob                  = models.DateField(auto_now=False, auto_now_add=False)
+    designation          = models.CharField(max_length=50)
+    skill                = models.CharField(max_length=50)
+    marital_status       = models.CharField(max_length=1, choices=STATUS, default='2')    
+    
+    def __str__(self):
+        return self.employee_id
+        
 
 class Bug(models.Model):
     name            = models.CharField(max_length=50)

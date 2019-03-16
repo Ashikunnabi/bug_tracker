@@ -33,5 +33,6 @@ urlpatterns = [
     path('client/delete/<int:id>', client_delete, name='pm_client_delete'),
     
     path('employee/add', employee_add, name='pm_employee_add'),
-    path('employee/detail', employee_details, name='pm_employee_details'),
+    path('employee/detail/<int:id>', employee_details, name='pm_employee_details'),
+    path('employee/delete/<int:id>', employee_delete, name='pm_employee_delete'),
 ]

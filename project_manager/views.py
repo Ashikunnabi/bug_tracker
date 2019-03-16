@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import Group, User
 
-from .models import Bug, Client, Project
+from .models import Bug, Client, Employee, Project
 from authentication.decorators import has_access
 
 ## ================= INDEX PAGE ==========================
@@ -10,7 +11,8 @@ from authentication.decorators import has_access
 def index(request):
     """  SUPERUSER and ADMIN has the power to see """   
     context = {
-        'project_count': Project.objects.all().count
+        'project_count': Project.objects.all().count,
+        'client_count': Client.objects.all().count,
     }    
     return render(request, 'project_manager/index.html', context)
 
@@ -331,26 +333,159 @@ def client_delete(request, id):
     }    
     return render(request, 'project_manager/client_add.html', context)
 
+
     
     
-    
+## ================= EMPLOYEE ADD ==========================   
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def employee_add(request):
-    """  SUPERUSER and ADMIN has the power to see """
+    """  SUPERUSER and ADMIN has the power to add new employee """
+    success_message, error_message = None, None
+    employees     = Employee.objects.all()
     
-    return render(request, 'project_manager/employee_add.html')
+    # Catching POST request 
+    if request.method == "POST":
+        employee_id        = request.POST['employee_id']
+        first_name         = request.POST['first_name']
+        last_name          = request.POST['last_name']
+        phone_number       = request.POST['phone_number']
+        email              = request.POST['email']
+        present_address    = request.POST['present_address']
+        permanent_address  = request.POST['permanent_address']
+        nid                = request.POST['nid']
+        dob                = request.POST['dob']
+        designation        = request.POST['designation']
+        skill              = request.POST['skill']
+        change_password    = request.POST['change_password']
+        marital_status     = request.POST['marital_status']
+        # Creating new project
+        try:
+            employee   = Employee.objects.create(
+                      employee_id=employee_id,
+                      change_password=change_password,
+                      first_name=first_name,
+                      last_name=last_name,
+                      phone_number=phone_number,
+                      email=email,
+                      present_address=present_address,
+                      permanent_address=permanent_address,
+                      nid=nid,
+                      dob=dob,
+                      designation=designation,
+                      skill=skill,
+                      marital_status=marital_status,
+                    )
+            employee.save()
+            user = User.objects.create_user(employee_id, email, change_password)
+            user.save()
+            # Add employee to a 'employee' group
+            group = Group.objects.get(name='employee')
+            group.user_set.add(user)  
+            success_message =  "new employee added."
+        except Exception as e:
+            print(e)
+            error_message = "to add employee."        
+    
+    context = {
+        'employees'       : employees,
+        'success_message' : success_message,
+        'error_message'   : error_message,
+    }
+    return render(request, 'project_manager/employee_add.html', context)
 
    
 
-   
+## ================= EMPLOYEE DETAIL - UPDATE ==========================   
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
-def employee_details(request):
-    """  SUPERUSER and ADMIN has the power to see """
+def employee_details(request, id):
+    """  employee detail with editible form will be shown """
+    success_message, error_message = None, None    
+    employee = Employee.objects.get(id=id)
+    # Catching POST request 
+    if request.method == "POST":
+        employee_id        = request.POST['employee_id']
+        first_name         = request.POST['first_name']
+        last_name          = request.POST['last_name']
+        phone_number       = request.POST['phone_number']
+        email              = request.POST['email']
+        present_address    = request.POST['present_address']
+        permanent_address  = request.POST['permanent_address']
+        nid                = request.POST['nid']
+        dob                = request.POST['dob']
+        designation        = request.POST['designation']
+        skill              = request.POST['skill']
+        change_password    = request.POST['change_password']
+        marital_status     = request.POST['marital_status']
+        # Creating new project
+        try:            
+            employee.employee_id        = employee_id      
+            employee.first_name         = first_name       
+            employee.last_name          = last_name        
+            employee.phone_number       = phone_number     
+            employee.email              = email            
+            employee.present_address    = present_address  
+            employee.permanent_address  = permanent_address
+            employee.nid                = nid              
+            employee.dob                = dob              
+            employee.designation        = designation      
+            employee.skill              = skill            
+            employee.change_password    = change_password  
+            employee.marital_status     = marital_status   
+            employee.save()
+            user = User.objects.get(username=employee.employee_id)
+            user.email=email
+            user.set_password(change_password)
+            user.save()
+            success_message =  "employee updated."
+        except Exception as e:
+            print(e)
+            error_message = "to update employee."    
     
-    return render(request, 'project_manager/employee_details.html')
+    context = {
+        'employee'        : employee,
+        'success_message' : success_message,
+        'error_message'   : error_message,
+    }
     
+    return render(request, 'project_manager/employee_details.html', context)
+
+    
+    
+## ================= EMPLOYEE DELETE ==========================   
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def employee_delete(request, id):
+    """  employee can be deleted """
+    success_message, error_message = None, None    
+    employee  = Employee.objects.get(id=id)
+    employees = Employee.objects.all()
+    
+    # Catching POST request 
+    if request.method == "POST":
+        # Creating new project
+        try:
+            user = User.objects.get(username=employee.employee_id)            
+            user.delete()
+            employee.delete()
+            success_message =  "employee deleted."
+        except Exception as e:
+            print(e)
+            error_message   = "to delete employee." 
+    
+    context = {
+        'employees'       : employees,
+        'success_message' : success_message,
+        'error_message'   : error_message,
+    }    
+    return render(request, 'project_manager/employee_add.html', context)
+
+    
+    
+    
+    
+
     
     
     
