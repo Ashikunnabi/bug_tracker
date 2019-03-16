@@ -420,7 +420,7 @@ def employee_details(request, id):
         marital_status     = request.POST['marital_status']
         # Creating new project
         try:            
-            employee.employee_id        = employee_id      
+            # employee.employee_id        = employee_id      
             employee.first_name         = first_name       
             employee.last_name          = last_name        
             employee.phone_number       = phone_number     
