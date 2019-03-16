@@ -1,0 +1,202 @@
+{% extends 'project_manager/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+  {% if success_message %}
+    <div class="col-sm-12">
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Successfully</span> {{success_message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>	
+  {% endif %}          
+  {% if error_message %}
+    <div class="col-sm-12">
+        <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Failed</span> {{error_message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>	
+  {% endif %}            
+</div>        
+
+<div class="col-lg-12">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Task Assign</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse no-show" id="collapseCardExample">
+      <div class="card-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Company Name</th>
+              <th scope="col">Deadline</th>
+              <th scope="col">Assign Task</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for project in projects %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ project.name }}</td>
+                <td>{{ project.client.name }}</td>	
+                <td>{{ project.deadline }}</td>		
+                <td>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{ project.id }}">
+                    <i class="fas fa-network-wired"></i>
+                  </button>
+                </td>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">{{ project.name }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">                          
+                        <form action="{% url 'pm_task_add' %}" method="POST">
+                          {% csrf_token %}
+                            <input type="text" name="project_name" value="{{project.id}}" hidden>
+                            <div class="form-group">
+                              <label for="possibleBugs">Employee Name</label>                                    
+                              <select name="employee_name" class="custom-select" id="clientName">                
+                              {% for employee in employees %}
+                                <option value="{{employee.id}}">{{employee.first_name}} {{employee.last_name}}</option>
+                              {% endfor %}                
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="possibleBugs">Bugs</label>                                    
+                              <select name="bugs" class="custom-select" multiple>                
+                              {% for bug in project.possible_bugs.all %}
+                                <option value="{{bug.id}}">{{bug.name}}</option>
+                              {% endfor %}                
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="testingCost">Description</label>
+                              <input type="text" name="description" class="form-control" id="testingCost" placeholder="Enter Task Description">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Deadline</label>
+                              <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" ></br>
+                              <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs">
+                            </div>  
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Assign</button>
+                        </div>
+                      </div>
+                     </form>
+                    </div>
+                  </div>		
+              </tr>
+            {% endfor %}            
+          </tbody>            
+        </table>            
+      </div>
+    </div>
+  </div>
+</div>   
+
+<div class="col-lg-12">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Task Details</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse show" id="collapseCardExample">
+      <div class="card-body"> 
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Deadline</th>
+              <th scope="col">Status</th>
+              <th scope="col">See More</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ task.project.name }}</td>
+              <td>{{ task.employee.first_name }} {{ task.employee.last_name }}</td>	
+              <td>{{ task.deadline }}</td>	
+              <td>{{ task.get_status_display }}</td>	
+              </tr>
+            {% endfor %}
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+              <td><a href=""><i class="fas fa-eye"></i></a></td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry the Bird</td>
+              <td>@twitter</td>
+              <td>@ffgfat</td>
+              <td>@fat</td>
+              <td><a href=""><i class="fas fa-eye"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function project_id(){
+    var project_id = document.getElementById("project_name").value;
+    console.log(project_id);
+  }
+
+
+</script>
+        
+{% endblock %}

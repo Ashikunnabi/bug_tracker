@@ -59,14 +59,20 @@ class Project(models.Model):
 
     
 class TaskAssign(models.Model):
+    STATUS = (
+        ('1', 'Completed'),
+        ('2', 'Processing'),
+        ('3', 'Failed'),
+    )
     project         = models.ForeignKey(Project, on_delete=models.CASCADE)
+    employee        = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    bugs            = models.ManyToManyField(Bug)
     description     = models.CharField(max_length=500)
-    possible_bugs   = models.ManyToManyField(Bug)
-    cost            = models.IntegerField()
-    deadline        = models.DateField()
+    deadline        = models.DateTimeField()
+    status          = models.CharField(max_length=1, choices=STATUS, default='2')
     
     def __str__(self):
-        return self.name
+        return self.project.name
         
         
         

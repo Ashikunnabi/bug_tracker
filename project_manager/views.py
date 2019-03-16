@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User
 
-from .models import Bug, Client, Employee, Project
+from .models import Bug, Client, Employee, Project, TaskAssign
 from authentication.decorators import has_access
 
 ## ================= INDEX PAGE ==========================
@@ -13,6 +13,7 @@ def index(request):
     context = {
         'project_count': Project.objects.all().count,
         'client_count': Client.objects.all().count,
+        'employee_count': Employee.objects.all().count,
     }    
     return render(request, 'project_manager/index.html', context)
 
@@ -97,9 +98,7 @@ def project_details(request, id):
             success_message     = "project updated."
         except Exception as e:
             print(e)
-            error_message       = "to update project."    
-    
-    
+            error_message       = "to update project."
     
     context = {
         'project'         : project,
@@ -198,9 +197,7 @@ def bug_details(request, id):
             success_message =  "bug updated."
         except Exception as e:
             print(e)
-            error_message = "to update bug."    
-    
-    
+            error_message = "to update bug."
     
     context = {
         'bug'             : bug,
@@ -293,9 +290,7 @@ def client_details(request, id):
             success_message =  "client updated."
         except Exception as e:
             print(e)
-            error_message = "to update client."    
-    
-    
+            error_message = "to update client." 
     
     context = {
         'client'          : client,
@@ -483,8 +478,114 @@ def employee_delete(request, id):
 
     
     
+
+
+
+## ================= TASK ADD ==========================   
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def task_add(request):
+    """  SUPERUSER and ADMIN has the power to add new client """
+    success_message, error_message = None, None
+    projects  = Project.objects.all()
+    employees = Employee.objects.all()
+    tasks     = TaskAssign.objects.all()
+    bugs      = Bug.objects.all()
+    
+    # Catching POST request 
+    if request.method == "POST":
+        project          = request.POST['project_name']
+        employee         = request.POST['employee_name']
+        bugs             = request.POST.getlist('bugs')
+        description      = request.POST['description']
+        deadline_date    = request.POST['deadline_date']
+        deadline_time    = request.POST['deadline_time']        
+        deadline         = deadline_date+" "+deadline_time
+        # Creating new project
+        try:
+            task   = TaskAssign.objects.create(
+                      project=Project.objects.get(id=project),
+                      employee=Employee.objects.get(id=employee),
+                      description=description,
+                      deadline=deadline,
+                    )
+            task.bugs.set(bugs)
+            task.save()
+            success_message =  "new task added."
+        except Exception as e:
+            print(e)
+            error_message = "to add task."        
+    
+    context = {
+        'projects'        : projects,
+        'employees'       : employees,
+        'tasks'           : tasks,
+        'success_message' : success_message,
+        'error_message'   : error_message,
+    }
+    return render(request, 'project_manager/task_add.html', context)
+
+   
+
+## ================= TASK DETAIL - UPDATE ==========================   
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def task_details(request, id):
+    """  Client detail with editible form will be shown """
+    success_message, error_message = None, None    
+    client = Client.objects.get(id=id)
+    
+    # Catching POST request 
+    if request.method == "POST":
+        client_name          = request.POST['client_name']
+        client_phone_number  = request.POST['client_phone_number']
+        # Creating new project
+        try:
+            client.name         = client_name
+            client.phone_number = client_phone_number
+            client.save()
+            success_message =  "client updated."
+        except Exception as e:
+            print(e)
+            error_message = "to update client." 
+    
+    context = {
+        'client'          : client,
+        'success_message' : success_message,
+        'error_message'   : error_message,
+    }
+    
+    return render(request, 'project_manager/client_details.html', context)
+
     
     
+## ================= TASK DELETE ==========================   
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def task_delete(request, id):
+    """  employee can be deleted """
+    success_message, error_message = None, None    
+    employee  = Employee.objects.get(id=id)
+    employees = Employee.objects.all()
+    
+    # Catching POST request 
+    if request.method == "POST":
+        # Creating new project
+        try:
+            user = User.objects.get(username=employee.employee_id)            
+            user.delete()
+            employee.delete()
+            success_message =  "employee deleted."
+        except Exception as e:
+            print(e)
+            error_message   = "to delete employee." 
+    
+    context = {
+        'employees'       : employees,
+        'success_message' : success_message,
+        'error_message'   : error_message,
+    }    
+    return render(request, 'project_manager/employee_add.html', context)    
 
     
     

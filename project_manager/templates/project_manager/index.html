@@ -41,7 +41,7 @@
                             <i class="fa fa-users text-light"></i>
                         </div>
                         <div class="h4 mb-0 text-light">
-                            <span class="count">500</span>
+                            <span class="count">{{employee_count}}</span>
                         </div>
                         <span class="h4 text-uppercase font-weight-bold text-light">Employees</span>
                         <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
@@ -127,7 +127,7 @@
     </div>
     <!--/.col-->
     <div class="col-lg-3 col-md-6">
-        <a href="">
+        <a href="{% url 'pm_task_add' %}">
             <div class="social-box test_assign">
                 <i class="fas fa-user-edit"></i>
                 <h6 class="text-center pt-3" style="color:gray;">Test Assign</h6>
