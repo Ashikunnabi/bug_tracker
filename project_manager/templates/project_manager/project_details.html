@@ -51,10 +51,14 @@
     <form action="{% url 'pm_project_details' project.id %}" method="POST">
       {% csrf_token %}              
       <div class="form-group">
-        <label for="possibleBugs">Company Name</label>                                    
+        <label for="possibleBugs">Company Name</label>                                           
         <select  name="company_name" class="custom-select" id="clientName">                
-        {% for client in clients %}
-          <option value="{{client.id}}">{{client.name}}</option>
+          {% for client in clients %}        
+          {% if project.client.id == client.id %}        
+            <option value="{{client.id}}" style="color:blue" selected>{{client.name}}</option>
+          {% else %}                
+            <option value="{{client.id}}">{{client.name}}</option>
+          {% endif %}                
         {% endfor %}                
         </select>
       </div>
