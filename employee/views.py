@@ -74,7 +74,7 @@ def profile(request):
 
     
     
-## ================= PROFILE PAGE ==========================
+## ================= TASK_SET PAGE ==========================
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def task_set(request):
@@ -89,7 +89,7 @@ def task_set(request):
 
     
 
-## ================= PROFILE PAGE ==========================
+## ================= TASK DETAILS PAGE ==========================
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def task_details(request, id):
