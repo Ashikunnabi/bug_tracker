@@ -163,8 +163,9 @@
               <td>{{ task.project.name }}</td>
               <td>{{ task.employee.first_name }} {{ task.employee.last_name }}</td>	
               <td>{{ task.deadline }}</td>	
-              <td>{{ task.get_status_display }}</td>	
-              </tr>
+              <td>{{ task.get_status_display }}</td>		
+              <td><a href="{% url 'pm_task_details' task.id %}"><i class="fas fa-eye"></i></a></td>
+            </tr>
             {% endfor %}
             <tr>
               <th scope="row">2</th>

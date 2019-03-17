@@ -37,6 +37,6 @@ urlpatterns = [
     path('employee/delete/<int:id>', employee_delete, name='pm_employee_delete'),
     
     path('task/add', task_add, name='pm_task_add'),
-    # path('employee/detail/<int:id>', employee_details, name='pm_employee_details'),
-    # path('employee/delete/<int:id>', employee_delete, name='pm_employee_delete'),
+    path('task/detail/<int:id>', task_details, name='pm_task_details'),
+    path('task/delete/<int:id>', task_delete, name='pm_task_delete'),
 ]

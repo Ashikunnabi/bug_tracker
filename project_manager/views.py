@@ -477,9 +477,6 @@ def employee_delete(request, id):
     return render(request, 'project_manager/employee_add.html', context)
 
     
-    
-
-
 
 ## ================= TASK ADD ==========================   
 # @login_required(login_url='login')
@@ -533,29 +530,40 @@ def task_add(request):
 def task_details(request, id):
     """  Client detail with editible form will be shown """
     success_message, error_message = None, None    
-    client = Client.objects.get(id=id)
+    task = TaskAssign.objects.get(id=id)
+    project = Project.objects.get(id=task.project.id)
     
     # Catching POST request 
     if request.method == "POST":
-        client_name          = request.POST['client_name']
-        client_phone_number  = request.POST['client_phone_number']
+        employee         = request.POST['employee_name']
+        bugs             = request.POST.getlist('bugs')
+        description      = request.POST['description']
+        deadline_date    = request.POST['deadline_date']
+        deadline_time    = request.POST['deadline_time']        
+        deadline         = deadline_date+" "+deadline_time
+        task_status      = request.POST['task_status']
         # Creating new project
         try:
-            client.name         = client_name
-            client.phone_number = client_phone_number
-            client.save()
-            success_message =  "client updated."
+            task.employee    = Employee.objects.get(id=employee)
+            task.description = description
+            task.deadline    = deadline
+            task.status      = task_status
+            task.bugs.set(bugs)
+            task.save()
+            success_message =  "task updated."
         except Exception as e:
             print(e)
-            error_message = "to update client." 
+            error_message = "to update task." 
     
     context = {
-        'client'          : client,
+        'task'            : task,
+        'employees'       : Employee.objects.all(),
+        'bugs'            : project.possible_bugs.all,
         'success_message' : success_message,
         'error_message'   : error_message,
     }
     
-    return render(request, 'project_manager/client_details.html', context)
+    return render(request, 'project_manager/task_details.html', context)
 
     
     
@@ -565,27 +573,25 @@ def task_details(request, id):
 def task_delete(request, id):
     """  employee can be deleted """
     success_message, error_message = None, None    
-    employee  = Employee.objects.get(id=id)
-    employees = Employee.objects.all()
+    task  = TaskAssign.objects.get(id=id)
+    tasks = TaskAssign.objects.all()
     
     # Catching POST request 
     if request.method == "POST":
         # Creating new project
-        try:
-            user = User.objects.get(username=employee.employee_id)            
-            user.delete()
-            employee.delete()
-            success_message =  "employee deleted."
+        try:          
+            task.delete()
+            success_message =  "task deleted."
         except Exception as e:
             print(e)
-            error_message   = "to delete employee." 
+            error_message   = "to delete task." 
     
     context = {
-        'employees'       : employees,
+        'tasks'           : tasks,
         'success_message' : success_message,
         'error_message'   : error_message,
     }    
-    return render(request, 'project_manager/employee_add.html', context)    
+    return render(request, 'project_manager/task_add.html', context)    
 
     
     
