@@ -1,4 +1,4 @@
-{% extends 'project_manager/base.html' %}
+{% extends 'employee/base.html' %}
 {% load static %}
 
 {% block content %}
@@ -117,20 +117,20 @@
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
-        <a href="">
+        <a href="{% url 'em_profile' %}">
             <div class="social-box project_entry ">
                 <i class="fas fa-box-open"></i>
-                <h6 class="text-center pt-3" style="color:gray;">PROJECT ENTRY</h6>
+                <h6 class="text-center pt-3" style="color:gray;">PROFILE</h6>
             </div>
         </a>
         <!--/social-box-->
     </div>
     <!--/.col-->
     <div class="col-lg-3 col-md-6">
-        <a href="">
+        <a href="{% url 'em_task_set' %}">
             <div class="social-box test_assign">
                 <i class="fas fa-user-edit"></i>
-                <h6 class="text-center pt-3" style="color:gray;">Test Assign</h6>
+                <h6 class="text-center pt-3" style="color:gray;">Test Assigned</h6>
             </div>
         </a>
         <!--/social-box-->

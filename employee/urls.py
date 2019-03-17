@@ -15,6 +15,13 @@ Including another URLconf
 """
 from django.urls import path, include
 
+from .views import * 
+
 urlpatterns = [
-    # path('', ),
+    path('', index, name='em_index' ),
+    
+    path('profile', profile, name='em_profile'),
+    path('tasks', task_set, name='em_task_set'),
+    path('task/detail/<int:id>', task_details, name='em_task_details'),
+    # path('project/delete/<int:id>', project_delete, name='pm_project_delete'),
 ]
