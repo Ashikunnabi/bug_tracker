@@ -400,7 +400,6 @@ def employee_details(request, id):
     employee = Employee.objects.get(id=id)
     # Catching POST request 
     if request.method == "POST":
-        employee_id        = request.POST['employee_id']
         first_name         = request.POST['first_name']
         last_name          = request.POST['last_name']
         phone_number       = request.POST['phone_number']
@@ -414,8 +413,7 @@ def employee_details(request, id):
         change_password    = request.POST['change_password']
         marital_status     = request.POST['marital_status']
         # Creating new project
-        try:            
-            # employee.employee_id        = employee_id      
+        try:                
             employee.first_name         = first_name       
             employee.last_name          = last_name        
             employee.phone_number       = phone_number     
