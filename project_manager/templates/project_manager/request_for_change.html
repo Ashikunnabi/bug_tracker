@@ -1,0 +1,195 @@
+{% extends 'project_manager/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+  {% if success_message %}
+    <div class="col-sm-12">
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Successfully</span> {{success_message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>	
+  {% endif %}          
+  {% if error_message %}
+    <div class="col-sm-12">
+        <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Failed</span> {{error_message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>	
+  {% endif %}            
+</div>        
+
+<div class="col-lg-12">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Pending Requests</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse no-show" id="collapseCardExample">
+      <div class="card-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for request_for_change in request_for_changes_pending %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ request_for_change.task.project.name }}</td>
+                <td>{{ request_for_change.task.employee.first_name }}</td>		
+                <td>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{ request_for_change.id }}">
+                    <i class="fas fa-person-booth"></i>
+                  </button>
+                </td>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter{{ request_for_change.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">{{ request_for_change.task.project.name }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">                          
+                        <form action="{% url 'pm_request_for_change' %}" method="POST">
+                          {% csrf_token %}
+                            <input type="text" name="request_id" value="{{request_for_change.id}}" hidden>
+                            <div class="form-group">
+                              <h4><strong>{{request_for_change.task.employee.first_name|upper}} {{request_for_change.task.employee.last_name|upper}}</strong>, wants to change task.</h4>                             
+                            </div>
+                            <div class="form-group">
+                              <label for="possibleBugs">Bugs</label>                                    
+                              <select name="bugs" class="custom-select" multiple>                
+                              {% for bug in request_for_change.task.bugs.all %}
+                                <option value="{{bug.id}}">{{bug.name}}</option>
+                              {% endfor %}                
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="testingCost">Description</label>
+                              <input type="text" name="description" class="form-control" id="testingCost" value="{{request_for_change.task.description}}">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Deadline</label>
+                              <input type="text" name="deadline_date" class="form-control"  value="{{request_for_change.task.deadline|date}}"></br>
+                              <input type="text" name="deadline_time" class="form-control" value="{{request_for_change.task.deadline|time}}">
+                              </div> 
+                            <div class="form-group">
+                              <label for="possibleBugs">Penalty Method</label>                                    
+                              <input type="text" name="deadline_time" class="form-control" value="{{request_for_change.get_penalty_display}}">
+                            </div> 
+                            <div class="form-group">
+                              <label for="possibleBugs">Action</label>                                    
+                              <select name="status" class="custom-select">                
+                              {% for key, status in statuses.STATUS %}
+                                <option value="{{key}}">{{status}}</option>
+                              {% endfor %}                
+                              </select>
+                            </div> 
+                            <div class="form-group">
+                              <label for="possibleBugs">If Accept Request then choose new employee</label>                                    
+                              <select name="employee" class="custom-select">                
+                              {% for employee in employees %}
+                                <option value="{{employee.id}}">{{employee.first_name}} {{employee.last_name}}</option>
+                              {% endfor %}                
+                              </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                      </div>
+                     </form>
+                    </div>
+                  </div>		
+              </tr>          
+            {% endfor %}            
+          </tbody>            
+        </table>            
+      </div>
+    </div>
+  </div>
+</div>   
+
+
+<div class="col-lg-12">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Requests</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse show" id="collapseCardExample">
+      <div class="card-body"> 
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for request_for_change in request_for_changes %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ request_for_change.task.project.name }}</td>
+              <td>{{ request_for_change.get_status_display }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function project_id(){
+    var project_id = document.getElementById("project_name").value;
+    console.log(project_id);
+  }
+
+
+</script>
+        
+{% endblock %}

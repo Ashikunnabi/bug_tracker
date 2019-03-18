@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User
 
-from .models import Bug, Client, Employee, Project, TaskAssign
+from .models import Bug, Client, Employee, Project, RequestForChange, TaskAssign
 from authentication.decorators import has_access
 
 ## ================= INDEX PAGE ==========================
@@ -11,9 +11,10 @@ from authentication.decorators import has_access
 def index(request):
     """  SUPERUSER and ADMIN has the power to see """   
     context = {
-        'project_count': Project.objects.all().count,
-        'client_count': Client.objects.all().count,
-        'employee_count': Employee.objects.all().count,
+        'project_count'  : Project.objects.all().count,
+        'client_count'   : Client.objects.all().count,
+        'employee_count' : Employee.objects.all().count,
+        'requests'       : RequestForChange.objects.filter(status='1').count,
     }    
     return render(request, 'project_manager/index.html', context)
 
@@ -589,7 +590,64 @@ def task_delete(request, id):
         'success_message' : success_message,
         'error_message'   : error_message,
     }    
-    return render(request, 'project_manager/task_add.html', context)    
+    return render(request, 'project_manager/task_add.html', context)
+
+    
+
+## ================= REQUEST FOR CHANGE PAGE ==========================
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def request_for_change(request):
+    """  SUPERUSER and ADMIN can accept and reject request """ 
+    success_message, error_message = None, None
+    statuses            = RequestForChange
+    request_for_changes_pending = RequestForChange.objects.filter(status='1')
+    request_for_changes = RequestForChange.objects.all()
+    employees           = Employee.objects.all()
+    
+    if request.method == "POST":
+        request_id = request.POST['request_id']
+        status     = request.POST['status']
+        try:
+            """ Request status update """
+            request_for_change = RequestForChange.objects.get(id=request_id)
+            request_for_change.status = status
+            request_for_change.save()
+            
+            if status == '2':         
+                """ If Request accepted """   
+                task_update = TaskAssign.objects.get(id=request_for_change.task.id)
+                task_update.status='3'
+                task_update.request_id=request_id
+                task_update.save()
+                # Task assign to new employee
+                employee     = request.POST['employee']
+                bugs         = list(request_for_change.task.bugs.all())
+        
+                task   = TaskAssign.objects.create(
+                      project=Project.objects.get(id=request_for_change.task.project.id),
+                      employee=Employee.objects.get(id=employee),
+                      description=request_for_change.task.description,
+                      deadline=request_for_change.task.deadline,
+                    )
+                task.bugs.set(bugs)
+                task.save()
+                
+            success_message =  "request updated."
+        except Exception as e:
+            print(e)
+            error_message = "to update request."       
+        
+    context = {
+        'statuses': statuses,
+        'request_for_changes_pending': request_for_changes_pending,
+        'request_for_changes': request_for_changes,
+        'employees': employees,
+        'success_message' : success_message,
+        'error_message'   : error_message,
+    }    
+    return render(request, 'project_manager/request_for_change.html', context)
+        
 
     
     

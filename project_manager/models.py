@@ -70,9 +70,28 @@ class TaskAssign(models.Model):
     description     = models.CharField(max_length=500)
     deadline        = models.DateTimeField()
     status          = models.CharField(max_length=1, choices=STATUS, default='2')
+    request_id      = models.CharField(max_length=5, blank=True)
     
     def __str__(self):
         return self.project.name
+
+    
+class RequestForChange(models.Model):
+    PENALTY = (
+        ('1', 'Salary Deduction'),
+        ('2', 'Overtime'),
+    )
+    STATUS = (
+        ('1', 'Pending'),
+        ('2', 'Accepted'),
+        ('3', 'Rejected'),
+    )
+    task            = models.ForeignKey(TaskAssign, on_delete=models.CASCADE)
+    penalty         = models.CharField(max_length=1, choices=PENALTY, default='2')
+    status          = models.CharField(max_length=1, choices=STATUS, default='1')
+    
+    def __str__(self):
+        return self.task.project.name
         
         
         

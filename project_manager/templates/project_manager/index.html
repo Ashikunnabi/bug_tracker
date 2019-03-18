@@ -137,12 +137,16 @@
     </div>
     <!--/.col-->
     <div class="col-lg-3 col-md-6">
-        <a href="">
-            <div class="social-box request_change">
-                <i class="fas fa-exchange-alt"></i>
-                <h6 class="text-center pt-3" style="color:gray;">Request for Change</h6>
-            </div>
-        </a>
+      {% if requests == 0 %}
+      {% else %}
+      <small style="position:absolute;margin:10px" class="badge badge-pill badge-warning">{{requests}}</small>
+      {% endif %}    
+      <a href="{% url 'pm_request_for_change' %}">
+          <div class="social-box request_change">                
+              <i class="fas fa-exchange-alt"></i>
+              <h6 class="text-center pt-3" style="color:gray;">Request for Change</h6>
+          </div>
+      </a>
         <!--/social-box-->
     </div>
     <!--/.col-->
