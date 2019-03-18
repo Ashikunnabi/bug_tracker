@@ -1,0 +1,184 @@
+{% extends 'employee/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+  {% if success_message %}
+    <div class="col-sm-12">
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-success">Successfully</span> {{success_message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>	
+  {% endif %}          
+  {% if error_message %}
+    <div class="col-sm-12">
+        <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Failed</span> {{error_message}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>	
+  {% endif %}            
+</div>        
+
+<div class="col-lg-12">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Request for Change</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse no-show" id="collapseCardExample">
+      <div class="card-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Deadline</th>
+              <th scope="col">Request for Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ task.project.name }}</td>
+                <td>{{ task.deadline }}</td>		
+                <td>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{ task.id }}">
+                    <i class="fas fa-person-booth"></i>
+                  </button>
+                </td>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">{{ task.project.name }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">                          
+                        <form action="{% url 'em_request_for_change' %}" method="POST">
+                          {% csrf_token %}
+                            <input type="text" name="task" value="{{task.id}}" hidden>
+                            <div class="form-group">
+                              <h4> You <strong>{{task.employee.first_name|upper}} {{task.employee.last_name|upper}}</strong>, wants to send a change task request?</h4>                                    
+                              <label style="color:red"> You will be demerited and get a penalty.</label>                               
+                            </div>
+                            <div class="form-group">
+                              <label for="possibleBugs">Bugs</label>                                    
+                              <select name="bugs" class="custom-select" multiple>                
+                              {% for bug in task.bugs.all %}
+                                <option value="{{bug.id}}">{{bug.name}}</option>
+                              {% endfor %}                
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="testingCost">Description</label>
+                              <input type="text" name="description" class="form-control" id="testingCost" value="{{task.description}}">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Deadline</label>
+                              <input type="text" name="deadline_date" class="form-control"  value="{{task.deadline|date}}"></br>
+                              <input type="text" name="deadline_time" class="form-control" value="{{task.deadline|time}}">
+                            </div> 
+                            <div class="form-group">
+                              <label for="possibleBugs">Bugs</label>                                    
+                              <select name="penalty" class="custom-select">                
+                              {% for key, penalty in request_penalty_methods.PENALTY %}
+                                <option value="{{key}}">{{penalty}}</option>
+                              {% endfor %}                
+                              </select>
+                            </div> 
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Penalty Accepted</button>
+                        </div>
+                      </div>
+                     </form>
+                    </div>
+                  </div>		
+              </tr>          
+            {% endfor %}            
+          </tbody>            
+        </table>            
+      </div>
+    </div>
+  </div>
+</div>   
+
+
+<div class="col-lg-12">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Requests</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse show" id="collapseCardExample">
+      <div class="card-body"> 
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Project Name</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for request_for_change in request_for_changes %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ request_for_change.task.project.name }}</td>
+              <td>{{ request_for_change.get_status_display }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function project_id(){
+    var project_id = document.getElementById("project_name").value;
+    console.log(project_id);
+  }
+
+
+</script>
+        
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
-from project_manager.models import Bug, Client, Employee, Project, TaskAssign
+from project_manager.models import Bug, Client, Employee, Project, RequestForChange, TaskAssign
 from authentication.decorators import has_access
 
 
@@ -10,7 +10,7 @@ from authentication.decorators import has_access
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def index(request):
-    """  SUPERUSER and ADMIN has the power to see """  
+    """  EMPLOYEE has the power to see """  
     context = {
         'project_count': Project.objects.all().count,
         'client_count': Client.objects.all().count,
@@ -24,7 +24,7 @@ def index(request):
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def profile(request):
-    """  SUPERUSER and ADMIN has the power to see """ 
+    """  SEMPLOYEE has the power to see and modify """ 
     success_message, error_message = None, None    
     print("g",request.user.username)  
     employee = Employee.objects.get(employee_id=request.user.username)
@@ -78,7 +78,7 @@ def profile(request):
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def task_set(request):
-    """  SUPERUSER and ADMIN has the power to see """ 
+    """  EMPLOYEE can see given task sets list """ 
     employee = Employee.objects.get(employee_id=request.user.username)
     # Query for employee task which is in processing
     tasks = TaskAssign.objects.filter(employee_id=employee.id, status='2')
@@ -93,7 +93,7 @@ def task_set(request):
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def task_details(request, id):
-    """  SUPERUSER and ADMIN has the power to see """ 
+    """  EMPLOYEE can see given task details """ 
     employee = Employee.objects.get(employee_id=request.user.username)
     # Query for employee task which is in processing
     task = TaskAssign.objects.get(id=id)
@@ -101,6 +101,43 @@ def task_details(request, id):
         'task': task,
     }    
     return render(request, 'employee/task_details.html', context)
+
+    
+
+## ================= REQUEST FOR CHANGE PAGE ==========================
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def request_for_change(request):
+    """  EMPLOYEE can send a request to admin for change his task """ 
+    success_message, error_message = None, None
+    employee = Employee.objects.get(employee_id=request.user.username)
+    # Query for employee task which is in processing
+    tasks = TaskAssign.objects.filter(employee_id=employee.id, status='2')
+    request_penalty_methods = RequestForChange
+    request_for_changes = RequestForChange.objects.all()
+    
+    if request.method == "POST":
+        task_id = request.POST['task']
+        penalty_method = request.POST['penalty']
+        try:
+            request_for_change = RequestForChange.objects.create(
+                             task = TaskAssign.objects.get(id=task_id),
+                             penalty = penalty_method,        
+            )
+            request_for_change.save()
+            success_message =  "request send."
+        except Exception as e:
+            print(e)
+            error_message = "to send request."       
+        
+    context = {
+        'tasks': tasks,
+        'request_penalty_methods': request_penalty_methods,
+        'request_for_changes': request_for_changes,
+        'success_message' : success_message,
+        'error_message'   : error_message,
+    }    
+    return render(request, 'employee/request_for_change.html', context)
     
     
     
