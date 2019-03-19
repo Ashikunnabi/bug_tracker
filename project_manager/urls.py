@@ -41,4 +41,5 @@ urlpatterns = [
     path('task/delete/<int:id>', task_delete, name='pm_task_delete'),
     
     path('request', request_for_change, name='pm_request_for_change'),
+    path('penalty', penalty, name='pm_penalty'),
 ]

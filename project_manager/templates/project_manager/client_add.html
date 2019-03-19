@@ -59,8 +59,8 @@
                 {% csrf_token %}
                   <div class="form-group">
                     <label for="projectName">Company Name</label>
-                    <input type="text" name="client_name" class="form-control" id="projectName" placeholder="Enter Client Name">
-                    <small id="projectNameHelp" class="form-text text-muted">Company name should unique</small>
+                    <input type="text" name="client_name" class="form-control" id="clientName" placeholder="Enter Client Name">
+                    <small id="clientNameHelp" class="form-text text-muted">Company name should unique</small>
                   </div>
                   <div class="form-group">
                     <label for="projectName">Phone Number</label>
@@ -107,5 +107,6 @@
             </div>
           </div>
         </div>
+
         
 {% endblock %}

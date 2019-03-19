@@ -89,6 +89,7 @@ class RequestForChange(models.Model):
     task            = models.ForeignKey(TaskAssign, on_delete=models.CASCADE)
     penalty         = models.CharField(max_length=1, choices=PENALTY, default='2')
     status          = models.CharField(max_length=1, choices=STATUS, default='1')
+    updated         = models.DateField(auto_now=True)
     
     def __str__(self):
         return self.task.project.name

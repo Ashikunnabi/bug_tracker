@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User
+from datetime import datetime
 
 from .models import Bug, Client, Employee, Project, RequestForChange, TaskAssign
 from authentication.decorators import has_access
@@ -14,6 +15,8 @@ def index(request):
         'project_count'  : Project.objects.all().count,
         'client_count'   : Client.objects.all().count,
         'employee_count' : Employee.objects.all().count,
+        'penalty'        : RequestForChange.objects.filter(updated__year=datetime.now().year, 
+                                      updated__month=datetime.now().month, status='2').count,
         'requests'       : RequestForChange.objects.filter(status='1').count,
     }    
     return render(request, 'project_manager/index.html', context)
@@ -656,6 +659,35 @@ def request_for_change(request):
         'error_message'   : error_message,
     }    
     return render(request, 'project_manager/request_for_change.html', context)
+        
+    
+
+## ================= REQUEST FOR CHANGE PAGE ==========================
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def penalty(request):
+    """  SUPERUSER and ADMIN can accept and reject request
+         If admin accept the request then the requester will be in penalty
+    """
+    ## ======================================
+    # ONLY VALUE PASS COMPLETED 
+    ## =====================================
+    day_wise_year    = datetime.now().year
+    day_wise_month   = datetime.now().month
+    day_wise_day     = datetime.now().day
+    month_wise_year  = datetime.now().year
+    month_wise_month = datetime.now().month
+    
+    penalties_day_wise = RequestForChange.objects.filter(updated__year=day_wise_year,updated__month=day_wise_month,
+                                      updated__day=day_wise_day,status='2')[::-1]
+    penalties_month_wise = RequestForChange.objects.filter(updated__year=month_wise_year,updated__month=month_wise_month,
+                                      status='2')[::-1]
+        
+    context = {
+        'penalties_day_wise': penalties_day_wise,
+        'penalties_month_wise': penalties_month_wise,
+    }    
+    return render(request, 'project_manager/penalty.html', context)
         
 
     
