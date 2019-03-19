@@ -598,11 +598,20 @@ def task_delete(request, id):
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def request_for_change(request):
-    """  SUPERUSER and ADMIN can accept and reject request """ 
+    """  SUPERUSER and ADMIN can accept and reject request
+         If admin accept the request then he/she must have to assign a new employee
+         to that task.
+         If accept request
+            - Accept request (RequestForChange model will be updated)
+            - Assign new employee for the task (TaskAssign model will be updated)
+         If reject request
+            - Accept request (RequestForChange model will be updated)
+   """ 
+   
     success_message, error_message = None, None
     statuses            = RequestForChange
     request_for_changes_pending = RequestForChange.objects.filter(status='1')
-    request_for_changes = RequestForChange.objects.all()
+    request_for_changes = RequestForChange.objects.all()[::-1]
     employees           = Employee.objects.all()
     
     if request.method == "POST":

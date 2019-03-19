@@ -108,13 +108,21 @@ def task_details(request, id):
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def request_for_change(request):
-    """  EMPLOYEE can send a request to admin for change his task """ 
+    """  EMPLOYEE can send a request to admin for change his task
+         After login employee can send a request to admin to change his/her task with a penalty.
+         Find out Employee info, Employees' task info that he/ she is assigned for, and the requests
+         that the made previously with their status.
+         If employee request for a change he/she must have to select a penalty method and until Admin
+         accept or reject it.  
+   """    
+   
     success_message, error_message = None, None
     employee = Employee.objects.get(employee_id=request.user.username)
     # Query for employee task which is in processing
     tasks = TaskAssign.objects.filter(employee_id=employee.id, status='2')
     request_penalty_methods = RequestForChange
-    request_for_changes = RequestForChange.objects.all()
+    # Query for logged in user's request for change item
+    request_for_changes = RequestForChange.objects.filter(task__employee__employee_id=request.user.username)
     
     if request.method == "POST":
         task_id = request.POST['task']
