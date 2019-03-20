@@ -70,6 +70,7 @@ class TaskAssign(models.Model):
     description     = models.CharField(max_length=500)
     deadline        = models.DateTimeField()
     status          = models.CharField(max_length=1, choices=STATUS, default='2')
+    updated         = models.DateField(auto_now=True)
     request_id      = models.CharField(max_length=5, blank=True)
     
     def __str__(self):

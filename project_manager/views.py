@@ -708,7 +708,53 @@ def penalty(request):
         'day_search'          : day_search,
         'month_search'        : month_search,
     }    
-    return render(request, 'project_manager/penalty.html', context)
+    return render(request, 'project_manager/penalty.html', context)       
+    
+    
+
+## ================= REPORT PAGE ==========================
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def report(request):
+    """  SUPERUSER and ADMIN can see report    """
+    # Default data    
+    day_search, month_search = 'Today', 'This month'
+    day_wise_year    = datetime.now().year
+    day_wise_month   = datetime.now().month
+    day_wise_day     = datetime.now().day
+    month_wise_year  = datetime.now().year
+    month_wise_month = datetime.now().month
+    
+    if request.method=="POST":
+        if request.POST['search_day_wise'] !='':
+          day_wise = request.POST['search_day_wise']
+          year, month, day = day_wise.split('-')         
+          day_wise_year    = year
+          day_wise_month   = month
+          day_wise_day     = day          
+          day_search       = day_wise
+          
+        elif request.POST['search_month_wise'] !='':
+            month_wise = request.POST['search_month_wise']
+            year, month      = month_wise.split('-')    
+            month_wise_year  = year
+            month_wise_month = month
+            month_search     = month_wise
+      
+            print(month_wise)
+        else:
+            print("No valid data found")
+            
+    reports_day_wise   = TaskAssign.objects.filter(updated__year=day_wise_year,updated__month=day_wise_month,updated__day=day_wise_day)[::-1]
+    reports_month_wise = TaskAssign.objects.filter(updated__year=month_wise_year,updated__month=month_wise_month)[::-1]
+        
+    context = {
+        'reports_day_wise'    : reports_day_wise,
+        'reports_month_wise'  : reports_month_wise,
+        'day_search'          : day_search,
+        'month_search'        : month_search,
+    }    
+    return render(request, 'project_manager/report.html', context)
         
 
     

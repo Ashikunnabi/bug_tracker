@@ -42,4 +42,5 @@ urlpatterns = [
     
     path('request', request_for_change, name='pm_request_for_change'),
     path('penalty', penalty, name='pm_penalty'),
+    path('report', report, name='pm_report'),
 ]

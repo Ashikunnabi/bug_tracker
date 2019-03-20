@@ -162,7 +162,29 @@ def penalty(request):
         'penalties'  : penalties,
     }    
     return render(request, 'employee/penalty.html', context)
+ 
     
+    
+## ================= REPORT PAGE ==========================
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def report(request):
+    """  EMPLOYEE can see and submit report """ 
+    employee = Employee.objects.get(employee_id=request.user.username)
+    # Query for employee task which is in processing
+    tasks     = TaskAssign.objects.filter(employee_id=employee.id, status='2')
+    tasks_all = TaskAssign.objects.filter(employee_id=employee.id)
+    
+    if request.method=="POST":
+        task_id = request.POST['task_id']
+        task = TaskAssign.objects.get(id=task_id)
+        task.status = '1'
+        task.save()
+    context = {
+        'tasks'   : tasks,
+        'tasks_all': tasks_all,
+    }    
+    return render(request, 'employee/report.html', context)   
     
     
     

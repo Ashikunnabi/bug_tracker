@@ -27,4 +27,5 @@ urlpatterns = [
     
     path('request', request_for_change, name='em_request_for_change'),
     path('penalty', penalty, name='em_penalty'),
+    path('report', report, name='em_report'),
 ]
