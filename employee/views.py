@@ -12,9 +12,10 @@ from authentication.decorators import has_access
 def index(request):
     """  EMPLOYEE has the power to see """  
     context = {
-        'project_count': Project.objects.all().count,
-        'client_count': Client.objects.all().count,
+        'project_count' : Project.objects.all().count,
+        'client_count'  : Client.objects.all().count,
         'employee_count': Employee.objects.all().count,
+        'penalty_count' : RequestForChange.objects.filter(task__employee__employee_id=request.user.username).count,
     }    
     return render(request, 'employee/index.html', context)
 
@@ -146,7 +147,21 @@ def request_for_change(request):
         'error_message'   : error_message,
     }    
     return render(request, 'employee/request_for_change.html', context)
+           
     
+
+## ================= PENALTY PAGE ==========================
+# @login_required(login_url='login')
+# @has_access(allowed_roles=['superuser', 'admin'])
+def penalty(request):
+    """  Employee can penalty details """
+    penalties = RequestForChange.objects.filter(task__employee__employee_id=request.user.username,
+                                               status='2')[::-1]
+        
+    context = {
+        'penalties'  : penalties,
+    }    
+    return render(request, 'employee/penalty.html', context)
     
     
     

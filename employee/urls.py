@@ -21,8 +21,10 @@ urlpatterns = [
     path('', index, name='em_index' ),
     
     path('profile', profile, name='em_profile'),
+    
     path('tasks', task_set, name='em_task_set'),
     path('task/detail/<int:id>', task_details, name='em_task_details'),
+    
     path('request', request_for_change, name='em_request_for_change'),
-    # path('project/delete/<int:id>', project_delete, name='pm_project_delete'),
+    path('penalty', penalty, name='em_penalty'),
 ]

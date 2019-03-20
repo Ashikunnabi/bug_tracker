@@ -662,30 +662,51 @@ def request_for_change(request):
         
     
 
-## ================= REQUEST FOR CHANGE PAGE ==========================
+## ================= PENALTY PAGE ==========================
 # @login_required(login_url='login')
 # @has_access(allowed_roles=['superuser', 'admin'])
 def penalty(request):
     """  SUPERUSER and ADMIN can accept and reject request
          If admin accept the request then the requester will be in penalty
     """
-    ## ======================================
-    # ONLY VALUE PASS COMPLETED 
-    ## =====================================
+    # Default data    
+    day_search, month_search = 'Today', 'This month'
     day_wise_year    = datetime.now().year
     day_wise_month   = datetime.now().month
     day_wise_day     = datetime.now().day
     month_wise_year  = datetime.now().year
     month_wise_month = datetime.now().month
     
+    if request.method=="POST":
+        if request.POST['search_day_wise'] !='':
+          day_wise = request.POST['search_day_wise']
+          year, month, day = day_wise.split('-')         
+          day_wise_year    = year
+          day_wise_month   = month
+          day_wise_day     = day          
+          day_search       = day_wise
+          
+        elif request.POST['search_month_wise'] !='':
+            month_wise = request.POST['search_month_wise']
+            year, month      = month_wise.split('-')    
+            month_wise_year  = year
+            month_wise_month = month
+            month_search     = month_wise
+      
+            print(month_wise)
+        else:
+            print("No valid data found")
+            
     penalties_day_wise = RequestForChange.objects.filter(updated__year=day_wise_year,updated__month=day_wise_month,
                                       updated__day=day_wise_day,status='2')[::-1]
     penalties_month_wise = RequestForChange.objects.filter(updated__year=month_wise_year,updated__month=month_wise_month,
                                       status='2')[::-1]
         
     context = {
-        'penalties_day_wise': penalties_day_wise,
+        'penalties_day_wise'  : penalties_day_wise,
         'penalties_month_wise': penalties_month_wise,
+        'day_search'          : day_search,
+        'month_search'        : month_search,
     }    
     return render(request, 'project_manager/penalty.html', context)
         
