@@ -59,15 +59,15 @@
         {% csrf_token %}
           <div class="form-group">
             <label for="EmployeeFirstName">Employee ID</label>
-            <input type="text" name="employee_id" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Employee ID">
+            <input type="text" name="employee_id" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Employee ID" required>
           </div>
           <div class="form-group">
             <label for="EmployeePermanentAddress">Password</label>
-            <input type="text" name="change_password" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter New Password">
+            <input type="text" name="change_password" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter New Password" required>
           </div>
           <div class="form-group">
             <label for="EmployeeFirstName">First Name</label>
-            <input type="text" name="first_name" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter First Name">
+            <input type="text" name="first_name" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter First Name" required>
             <small id="clientNameHelp" class="form-text text-muted">First name should contain ( { A-Z }, { a-z }, { 0-9 }, { . } )</small>
           </div>
           <div class="form-group">

@@ -15,9 +15,10 @@ def index(request):
         'project_count'  : Project.objects.all().count,
         'client_count'   : Client.objects.all().count,
         'employee_count' : Employee.objects.all().count,
-        'penalty'        : RequestForChange.objects.filter(updated__year=datetime.now().year, 
+        'penalty_count'  : RequestForChange.objects.filter(updated__year=datetime.now().year, 
                                       updated__month=datetime.now().month, status='2').count,
-        'requests'       : RequestForChange.objects.filter(status='1').count,
+        'requests_count' : RequestForChange.objects.filter(status='1').count,
+        'report_count'   : TaskAssign.objects.filter(updated__year=datetime.now().year,updated__month=datetime.now().month).count,
     }    
     return render(request, 'project_manager/index.html', context)
 
