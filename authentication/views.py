@@ -36,7 +36,13 @@ def login_view(request):
         user = authenticate(username=employee_id, password=password) # If user is valid then authenticte otherwise not
         if user is not None:
             login(request, user)                        # If valid user then login
-            return redirect('/')
+            if request.user.groups.all()[0].name == ('superuser' or 'admin'):
+                return redirect('pm_index')
+            elif request.user.groups.all()[0].name == 'employee':
+                return redirect('em_index')
+            else:
+                context={"error": "Invalid Employee ID / Password."}
+                return render(request, 'authentication/login.html', context)
         else:                                           # If username / password is wrong
             context={"error": "Invalid Employee ID / Password."}
             return render(request, 'authentication/login.html', context)
@@ -121,5 +127,12 @@ def change_password_view(request):
         return render(request, 'authentication/login.html', context) 
     else:
         return render(request, 'authentication/login.html')
-        
-        
+   
+   
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
+def index_view(request): 
+    pass
+
+
+       

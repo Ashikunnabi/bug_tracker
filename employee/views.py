@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.shortcuts import render
 
 from project_manager.models import Bug, Client, Employee, Project, RequestForChange, TaskAssign
 from authentication.decorators import has_access
@@ -7,8 +8,8 @@ from authentication.decorators import has_access
 
 
 ## ================= INDEX PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['employee'])
 def index(request):
     """  EMPLOYEE has the power to see """  
     context = {
@@ -22,8 +23,8 @@ def index(request):
     
 
 ## ================= PROFILE PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['employee'])
 def profile(request):
     """  SEMPLOYEE has the power to see and modify """ 
     success_message, error_message = None, None    
@@ -76,8 +77,8 @@ def profile(request):
     
     
 ## ================= TASK_SET PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['employee'])
 def task_set(request):
     """  EMPLOYEE can see given task sets list """ 
     employee = Employee.objects.get(employee_id=request.user.username)
@@ -91,8 +92,8 @@ def task_set(request):
     
 
 ## ================= TASK DETAILS PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['employee'])
 def task_details(request, id):
     """  EMPLOYEE can see given task details """ 
     employee = Employee.objects.get(employee_id=request.user.username)
@@ -106,8 +107,8 @@ def task_details(request, id):
     
 
 ## ================= REQUEST FOR CHANGE PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['employee'])
 def request_for_change(request):
     """  EMPLOYEE can send a request to admin for change his task
          After login employee can send a request to admin to change his/her task with a penalty.
@@ -151,8 +152,8 @@ def request_for_change(request):
     
 
 ## ================= PENALTY PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['employee'])
 def penalty(request):
     """  Employee can penalty details """
     penalties = RequestForChange.objects.filter(task__employee__employee_id=request.user.username,
@@ -166,8 +167,8 @@ def penalty(request):
     
     
 ## ================= REPORT PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['employee'])
 def report(request):
     """  EMPLOYEE can see and submit report """ 
     employee = Employee.objects.get(employee_id=request.user.username)

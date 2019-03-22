@@ -1,14 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group, User
 from datetime import datetime
+from django.shortcuts import render, redirect
 
 from .models import Bug, Client, Employee, Project, RequestForChange, TaskAssign
 from authentication.decorators import has_access
 
 ## ================= INDEX PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def index(request):
     """  SUPERUSER and ADMIN has the power to see """   
     context = {
@@ -25,8 +25,8 @@ def index(request):
     
     
 ## ================= PROJECT ADD ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def project_add(request):
     """  SUPERUSER and ADMIN has the power to add new project """
     success_message, error_message = None, None
@@ -72,8 +72,8 @@ def project_add(request):
    
 
 ## ================= PROJECT DETAIL - UPDATE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def project_details(request, id):
     """  Project detail with editible form will be shown """
     success_message, error_message = None, None    
@@ -118,8 +118,8 @@ def project_details(request, id):
     
     
 ## ================= PROJECT DELETE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def project_delete(request, id):
     """  Project can be deleted """
     success_message, error_message = None, None    
@@ -150,8 +150,8 @@ def project_delete(request, id):
 
 
 ## ================= BUG ADD ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def bug_add(request):
     """  SUPERUSER and ADMIN has the power to add new bug """
     success_message, error_message = None, None
@@ -183,8 +183,8 @@ def bug_add(request):
    
 
 ## ================= BUG DETAIL - UPDATE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def bug_details(request, id):
     """  Bug detail with editible form will be shown """
     success_message, error_message = None, None    
@@ -215,8 +215,8 @@ def bug_details(request, id):
     
     
 ## ================= BUG DELETE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def bug_delete(request, id):
     """  Bug can be deleted """
     success_message, error_message = None, None    
@@ -243,8 +243,8 @@ def bug_delete(request, id):
 
 
 ## ================= CLIENT ADD ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def client_add(request):
     """  SUPERUSER and ADMIN has the power to add new client """
     success_message, error_message = None, None
@@ -276,8 +276,8 @@ def client_add(request):
    
 
 ## ================= CLIENT DETAIL - UPDATE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def client_details(request, id):
     """  Client detail with editible form will be shown """
     success_message, error_message = None, None    
@@ -308,8 +308,8 @@ def client_details(request, id):
     
     
 ## ================= CLIENT DELETE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def client_delete(request, id):
     """  client can be deleted """
     success_message, error_message = None, None    
@@ -337,8 +337,8 @@ def client_delete(request, id):
     
     
 ## ================= EMPLOYEE ADD ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def employee_add(request):
     """  SUPERUSER and ADMIN has the power to add new employee """
     success_message, error_message = None, None
@@ -397,8 +397,8 @@ def employee_add(request):
    
 
 ## ================= EMPLOYEE DETAIL - UPDATE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def employee_details(request, id):
     """  employee detail with editible form will be shown """
     success_message, error_message = None, None    
@@ -452,8 +452,8 @@ def employee_details(request, id):
     
     
 ## ================= EMPLOYEE DELETE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def employee_delete(request, id):
     """  employee can be deleted """
     success_message, error_message = None, None    
@@ -482,8 +482,8 @@ def employee_delete(request, id):
     
 
 ## ================= TASK ADD ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def task_add(request):
     """  SUPERUSER and ADMIN has the power to add new client """
     success_message, error_message = None, None
@@ -528,8 +528,8 @@ def task_add(request):
    
 
 ## ================= TASK DETAIL - UPDATE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def task_details(request, id):
     """  Client detail with editible form will be shown """
     success_message, error_message = None, None    
@@ -571,8 +571,8 @@ def task_details(request, id):
     
     
 ## ================= TASK DELETE ==========================   
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def task_delete(request, id):
     """  employee can be deleted """
     success_message, error_message = None, None    
@@ -599,8 +599,8 @@ def task_delete(request, id):
     
 
 ## ================= REQUEST FOR CHANGE PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def request_for_change(request):
     """  SUPERUSER and ADMIN can accept and reject request
          If admin accept the request then he/she must have to assign a new employee
@@ -664,8 +664,8 @@ def request_for_change(request):
     
 
 ## ================= PENALTY PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def penalty(request):
     """  SUPERUSER and ADMIN can accept and reject request
          If admin accept the request then the requester will be in penalty
@@ -714,8 +714,8 @@ def penalty(request):
     
 
 ## ================= REPORT PAGE ==========================
-# @login_required(login_url='login')
-# @has_access(allowed_roles=['superuser', 'admin'])
+@login_required(login_url='login')
+@has_access(allowed_roles=['superuser', 'admin'])
 def report(request):
     """  SUPERUSER and ADMIN can see report    """
     # Default data    
