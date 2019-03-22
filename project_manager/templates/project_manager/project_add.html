@@ -67,16 +67,16 @@
                   </div>
                   <div class="form-group">
                     <label for="projectName">Project Name</label>
-                    <input type="text" name="project_name" class="form-control" id="projectName" placeholder="Enter Project Name">
+                    <input type="text" name="project_name" class="form-control" id="projectName" placeholder="Enter Project Name" required>
                     <small id="projectNameHelp" class="form-text text-muted">Project name should unique</small>
                   </div>
                   <div class="form-group">
                     <label for="projectName">Project Description</label>
-                    <input type="text" name="project_description" class="form-control" id="projectName" placeholder="Enter Project Description">
+                    <input type="text" name="project_description" class="form-control" id="projectName" placeholder="Enter Project Description" required>
                   </div>
                   <div class="form-group">
                     <label for="possibleBugs">Possible Bugs</label>                                    
-                    <select  name="possible_bugs" class="custom-select" multiple>                
+                    <select  name="possible_bugs" class="custom-select" multiple required>                
                     {% for bug in bugs %}
                       <option value="{{bug.id}}">{{bug.name}}</option>
                     {% endfor %}                
@@ -84,12 +84,12 @@
                   </div>
 				          <div class="form-group">
                     <label for="testingCost">Testing Cost</label>
-                    <input type="text" name="testing_cost" class="form-control" id="testingCost" placeholder="Enter coste">
+                    <input type="number" name="testing_cost" class="form-control" id="testingCost" placeholder="Enter cost" required>
                   </div>
                   <div class="form-group">
                     <label for="">Deadline</label>
-                    <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" ></br>
-                    <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs">
+                    <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" required></br>
+                    <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs" required>
                   </div>
 
                   <button type="submit" class="btn btn-primary">Submit</button>

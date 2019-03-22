@@ -58,7 +58,7 @@
       </div>
       <div class="form-group">
         <label for="possibleBugs">Employee Name</label>                                    
-        <select name="employee_name" class="custom-select" id="clientName">                
+        <select name="employee_name" class="custom-select" id="clientName" required>                
         {% for employee in employees %}
           {% if task.employee.id == employee.id %}
             <option value="{{employee.id}}" style="color:blue" selected>{{employee.first_name}} {{employee.last_name}}</option>
@@ -69,7 +69,7 @@
       </div>
       <div class="form-group">
         <label for="possibleBugs">Bugs</label>                                    
-        <select name="bugs" class="custom-select" multiple>    
+        <select name="bugs" class="custom-select" multiple required>    
         {% for bug in bugs %}
           {% if bug in task.bugs.all %}
             <option style="color:blue" value="{{bug.id}}" selected >{{bug.name}}</option>                    
@@ -81,12 +81,12 @@
       </div>
       <div class="form-group">
         <label for="testingCost">Description</label>
-        <input type="text" name="description" class="form-control" id="testingCost" placeholder="Enter Task Description" value="{{task.description}}">
+        <input type="text" name="description" class="form-control" id="testingCost" placeholder="Enter Task Description" value="{{task.description}}" required>
       </div>
       <div class="form-group">
         <label for="">Deadline</label>
-        <input type="text" name="deadline_date" class="form-control" id="examplePossibleBugs" value="{{task.deadline|date:'Y-m-d'}}"></br>
-        <input type="text" name="deadline_time" class="form-control" id="examplePossibleBugs" value="{{task.deadline|time:'h:i'}}">
+        <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" value="{{task.deadline|date:'Y-m-d'}}" required></br>
+        <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs" value="{{task.deadline|time:'h:i'}}" required>
       </div>      
       <div class="form-group">
         <label for="EmployeeMaritalStatus">Task Status</label>                

@@ -67,41 +67,39 @@
           </div>
           <div class="form-group">
             <label for="EmployeeFirstName">First Name</label>
-            <input type="text" name="first_name" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter First Name" required>
-            <small id="clientNameHelp" class="form-text text-muted">First name should contain ( { A-Z }, { a-z }, { 0-9 }, { . } )</small>
+            <input type="text" name="first_name" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter First Name" required>            
           </div>
           <div class="form-group">
             <label for="EmployeeLastName">Last Name</label>
-            <input type="text" name="last_name" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Last Name">
-            <small id="clientNameHelp" class="form-text text-muted">Last name should contain ( { A-Z }, { a-z }, { 0-9 }, { . } )</small>
+            <input type="text" name="last_name" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Last Name" required>            
           </div>
           <div class="form-group">
             <label for="EmployeePhone">Phone Number</label>
-            <input type="text" name="phone_number" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" placeholder="Enter Phone Number">
+            <input type="number" name="phone_number" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" placeholder="018XXXXXXXX"  pattern="[0-9]{11,11}" required>
           </div>
           <div class="form-group">
             <label for="EmployeeEmail">Email</label>
-            <input type="email" name="email" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" placeholder="Enter Email">
+            <input type="email" name="email" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" placeholder="Enter Email" required>
           </div>
             <div class="form-group">
             <label for="EmployeePresentAddress">Present Address</label>
-            <input type="text" name="present_address" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Present Address">
+            <input type="text" name="present_address" class="form-control"aria-describedby="clientNameHelp" placeholder="Enter Present Address" required>
           </div>
           <div class="form-group">
             <label for="EmployeePermanentAddress">Permanent Address</label>
-            <input type="text" name="permanent_address" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Permanent Address">
+            <input type="text" name="permanent_address" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Permanent Address" required>
           </div>
            <div class="form-group">
             <label for="EmployeeNID">NID No.</label>
-            <input type="text" name="nid" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter NID No.">
+            <input type="number" name="nid" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter NID No." pattern="[0-9]{19,19}" required>
           </div>
           <div class="form-group">
             <label for="Employeedob">Date of Birth</label>
-            <input type="date" name="dob" class="form-control" id="examplePossibleBugs" placeholder="Date of Birth">
+            <input type="date" name="dob" class="form-control" id="examplePossibleBugs" placeholder="Date of Birth" required>
           </div>
           <div class="form-group">
             <label for="EmployeeDesignation">Designation</label>
-            <input type="text" name="designation" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Designation">
+            <input type="text" name="designation" class="form-control" id="clientName" aria-describedby="clientNameHelp" placeholder="Enter Designation" required>
           </div>
           <div class="form-group">
             <label for="EmployeeSkill">Skill</label>
@@ -109,7 +107,7 @@
           </div>
           <div class="form-group">
           <label for="EmployeeMaritalStatus">Marital Status</label>                
-         <select name="marital_status" id="select" class="form-control">
+         <select name="marital_status" id="select" class="form-control"  required>
                 <option>Please select</option>
                 <option value="1">Married</option>
                 <option value="2">Unmarried</option>

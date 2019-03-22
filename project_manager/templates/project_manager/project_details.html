@@ -64,16 +64,16 @@
       </div>
       <div class="form-group">
         <label for="projectName">Project Name</label>
-        <input type="text" name="project_name" class="form-control" id="projectName" aria-describedby="projectNameHelp" value="{{project.name}}">
+        <input type="text" name="project_name" class="form-control" id="projectName" aria-describedby="projectNameHelp" value="{{project.name}}" required>
         <small id="projectNameHelp" class="form-text text-muted">Project name should unique</small>
       </div>
       <div class="form-group">
         <label for="exampleClientPhone">Description</label>
-        <input type="text" name="project_description" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" value="{{project.description}}">
+        <input type="text" name="project_description" class="form-control" id="clientPhone" aria-describedby="clientPhoneHelp" value="{{project.description}}" required>
       </div>
       <div class="form-group">
         <label for="examplePossibleBugs">Possible Bugs</label>                                
-        <select  name="possible_bugs" class="custom-select" multiple>    
+        <select  name="possible_bugs" class="custom-select" multiple required>    
         {% for bug in bugs %}
           {% if bug in project.possible_bugs.all %}
             <option style="color:blue" value="{{bug.id}}" selected >{{bug.name}}</option>                    
@@ -85,12 +85,12 @@
       </div>
       <div class="form-group">
         <label for="exampleTestingCost">Testing Cost</label>
-        <input type="text" name="testing_cost" class="form-control" id="exampleTestingCost" value="{{project.cost}}">
+        <input type="number" name="testing_cost" class="form-control" id="exampleTestingCost" value="{{project.cost}}" required>
       </div>
       <div class="form-group">
         <label for="examplePossibleBugs">Deadline</label>
-        <input type="text" name="deadline_date" class="form-control" id="examplePossibleBugs" value="{{project.deadline|date:'Y-m-d'}}"></br>
-        <input type="text" name="deadline_time" class="form-control" id="examplePossibleBugs" value="{{project.deadline|time:'h:i'}}">
+        <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" value="{{project.deadline|date:'Y-m-d'}}" required></br>
+        <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs" value="{{project.deadline|time:'h:i'}}" required>
       </div>
       <button type="submit" class="btn btn-primary" style="float:right">Save change</button>
     </form>

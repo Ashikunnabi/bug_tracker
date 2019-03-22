@@ -34,61 +34,53 @@
     <!-- Widgets 01 -->
     <div class="col-sm-12 mb-4">
         <div class="card-group">
-            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
-                <a href="">
-                    <div class="card-body bg-flat-color-3">
-                        <div class="h1 text-right mb-4" style="color:white;">
-                            <i class="fas fa-tasks"></i>
-                        </div>
-                        <div class="h4 mb-0 text-light">
-                            <span class="count">5</span>
-                        </div>
-                        <span class="h4 text-light text-uppercase font-weight-bold">Projects</span>
-                        <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
-                    </div>
-                </a>
+            <div class="card col-lg-4 col-md-3 no-padding no-shadow">
+              <div class="card-body bg-flat-color-3">
+                  <div class="h1 text-right mb-4" style="color:white;">
+                      <i class="fas fa-tasks"></i>
+                  </div>
+                  <div class="h4 mb-0 text-light">
+                      <span class="count">5</span>
+                  </div>
+                  <span class="h4 text-light text-uppercase font-weight-bold">Projects</span>
+                  <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+              </div>
             </div>
-            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
-                <a href="">
-                    <div class="card-body bg-flat-color-5">
-                        <div class="h1 text-right text-light mb-4">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="mb-0 text-light">
-                            <span class="text-uppercase font-weight-bold text-light">Rank</span>
-                        </div>
-                        <span class="h4 text-uppercase font-weight-bold text-light">3*</span>
-                        <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 9px;"></div>
-                    </div>
-                </a>
+            <div class="card col-lg-4 col-md-3 no-padding no-shadow">
+              <div class="card-body bg-flat-color-5">
+                  <div class="h1 text-right text-light mb-4">
+                      <i class="fas fa-star"></i>
+                  </div>
+                  <div class="mb-0 text-light">
+                      <span class="text-uppercase font-weight-bold text-light">Rank</span>
+                  </div>
+                  <span class="h4 text-uppercase font-weight-bold text-light">3*</span>
+                  <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 9px;"></div>
+              </div>
             </div>
-            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
-                <a href="{% url 'em_penalty' %}">
-                    <div class="card-body bg-flat-color-4">
-                        <div class="h1 text-light text-right mb-4">
-                            <i class="fas fa-hand-middle-finger"></i>
-                        </div>
-                        <div class="h4 mb-0 text-light">{{penalty_count}}</div>
-                        <span class="h4 text-light text-uppercase font-weight-bold">Penalty</span>
-                        <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
-                    </div>
-                </a>
+            <div class="card col-lg-4 col-md-3 no-padding no-shadow">
+              <div class="card-body bg-flat-color-4">
+                  <div class="h1 text-light text-right mb-4">
+                      <i class="fas fa-book-dead"></i>
+                  </div>
+                  <div class="h4 mb-0 text-light">{{penalty_count}}</div>
+                  <span class="h4 text-light text-uppercase font-weight-bold">Penalty</span>
+                  <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+              </div>
             </div>
-            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
-                <a href="{% url 'em_report' %}">
-                    <div class="card-body bg-flat-color-6">
-                        <div class="h1 text-light text-right mb-4">
-                            <i class="fas fa-hand-middle-finger"></i>
-                        </div>
-                        <div class="h4 mb-0 text-light">1</div>
-                        <span class="h4 text-light text-uppercase font-weight-bold">Report</span>
-                        <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
-                    </div>
-                </a>
+            <div class="card col-lg-4 col-md-3 no-padding no-shadow">
+              <div class="card-body bg-flat-color-6">
+                  <div class="h1 text-light text-right mb-4">
+                      <i class="fas fa-file-alt"></i>
+                  </div>
+                  <div class="h4 mb-0 text-light">1</div>
+                  <span class="h4 text-light text-uppercase font-weight-bold">Report</span>
+                  <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+              </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-4 col-md-6">
         <a href="{% url 'em_profile' %}">
             <div class="social-box project_entry ">
                 <i class="fas fa-box-open"></i>
@@ -98,7 +90,7 @@
         <!--/social-box-->
     </div>
     <!--/.col-->
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-4 col-md-6">
         <a href="{% url 'em_task_set' %}">
             <div class="social-box test_assign">
                 <i class="fas fa-user-edit"></i>
@@ -108,7 +100,7 @@
         <!--/social-box-->
     </div>
     <!--/.col-->
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-4 col-md-6">
         <a href="{% url 'em_request_for_change' %}">
             <div class="social-box request_change">
                 <i class="fas fa-exchange-alt"></i>
@@ -117,17 +109,6 @@
         </a>
         <!--/social-box-->
     </div>
-    <!--/.col-->
-    <div class="col-lg-3 col-md-6">
-        <a href="">
-            <div class="social-box bugs">
-                <i class="fas fa-spider"></i>
-                <h6 class="text-center pt-3" style="color:gray;">Bugs</h6>
-            </div>
-        </a>
-        <!--/social-box-->
-    </div>
-    <!--/.col-->
 </div> <!-- .content -->
 
 {% endblock %}
