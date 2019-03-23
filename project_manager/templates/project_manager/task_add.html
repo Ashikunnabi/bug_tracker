@@ -95,8 +95,11 @@
                             <div class="form-group">
                               <label for="possibleBugs">Employee Name</label>                                    
                               <select name="employee_name" class="custom-select" id="clientName">                
-                              {% for employee in employees %}
+                              {% for employee in employees %}                              
+                              {% if employee.id in exclude_employee %}                              
+                              {% else %}                              
                                 <option value="{{employee.id}}">{{employee.first_name}} {{employee.last_name}}</option>
+                              {% endif %}                
                               {% endfor %}                
                               </select>
                             </div>

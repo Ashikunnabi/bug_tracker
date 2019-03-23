@@ -490,7 +490,7 @@ def task_add(request):
     projects  = Project.objects.all()
     employees = Employee.objects.all()
     tasks     = TaskAssign.objects.all()
-    bugs      = Bug.objects.all()
+    bugs      = Bug.objects.all()    
     
     # Catching POST request 
     if request.method == "POST":
@@ -520,12 +520,30 @@ def task_add(request):
         'projects'        : projects,
         'employees'       : employees,
         'tasks'           : tasks,
+        'exclude_employee': _5_tasked_employee(),
         'success_message' : success_message,
         'error_message'   : error_message,
     }
     return render(request, 'project_manager/task_add.html', context)
 
-   
+
+def _5_tasked_employee():
+    """ If employee assigned for 5 task he/she will not take any more task """
+    count = 0
+    id_list = []     # 5 tasked employees id
+    employees = Employee.objects.all()
+    tasks = TaskAssign.objects.filter(status='2')
+    
+    for employee in employees:
+        for task in tasks:
+            if employee.id == task.employee.id:
+                count += 1 
+        if count==5:
+            id_list.append(employee.id)
+        count = 0
+    return id_list
+
+    
 
 ## ================= TASK DETAIL - UPDATE ==========================   
 @login_required(login_url='login')
