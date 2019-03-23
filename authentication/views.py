@@ -124,7 +124,7 @@ def change_password_view(request):
    
    
 @login_required(login_url='login')
-@has_access(allowed_roles=['superuser', 'admin'])
+@has_access(allowed_roles=['superuser', 'admin', 'employee'])
 def index_view(request): 
     if request.user.groups.all()[0].name == ('superuser' or 'admin'):
         return redirect('pm_index')

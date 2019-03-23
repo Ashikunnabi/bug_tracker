@@ -105,7 +105,7 @@
                             </div>
                             <div class="form-group">
                               <label for="possibleBugs">Bugs</label>                                    
-                              <select name="bugs" class="custom-select" multiple>                
+                              <select name="bugs" class="custom-select" multiple required>                
                               {% for bug in project.possible_bugs.all %}
                                 <option value="{{bug.id}}">{{bug.name}}</option>
                               {% endfor %}                
@@ -117,8 +117,8 @@
                             </div>
                             <div class="form-group">
                               <label for="">Deadline</label>
-                              <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" ></br>
-                              <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs">
+                              <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" required></br>
+                              <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs" required>
                             </div>  
                         </div>
                         <div class="modal-footer">

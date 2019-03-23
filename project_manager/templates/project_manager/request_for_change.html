@@ -118,7 +118,10 @@
                               <label for="possibleBugs">Action</label>                                    
                               <select name="status" class="custom-select">                
                               {% for key, status in statuses.STATUS %}
+                              {% if key==1 %}
+                              {% else %}
                                 <option value="{{key}}">{{status}}</option>
+                              {% endif %}                
                               {% endfor %}                
                               </select>
                             </div> 
