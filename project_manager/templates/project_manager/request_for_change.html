@@ -118,7 +118,7 @@
                               <label for="possibleBugs">Action</label>                                    
                               <select name="status" class="custom-select">                
                               {% for key, status in statuses.STATUS %}
-                              {% if key==1 %}
+                              {% if '1' in key %}
                               {% else %}
                                 <option value="{{key}}">{{status}}</option>
                               {% endif %}                
@@ -129,10 +129,13 @@
                               <label for="possibleBugs">If Accept Request then choose new employee</label>                                    
                               <select name="employee" class="custom-select">                
                               {% for employee in employees %}
-                              {% if request_for_change.task.employee.employee_id == employee.employee_id %}
-                              {% else %}
-                                <option value="{{employee.id}}">{{employee.first_name}} {{employee.last_name}}</option>
-                              {% endif %}                
+                                {% if request_for_change.task.employee.employee_id == employee.employee_id %}                              
+                                {% else %}
+                                  {% if employee.employee_id in exclude_employee %}
+                                  {% else %}
+                                    <option value="{{employee.id}}">{{employee.first_name}} {{employee.last_name}}</option>
+                                  {% endif %}                
+                                {% endif %}                
                               {% endfor %}                
                               </select>
                             </div>

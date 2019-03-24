@@ -17,7 +17,7 @@ def index(request):
         'employee_count' : Employee.objects.all().count,
         'penalty_count'  : RequestForChange.objects.filter(updated__year=datetime.now().year, 
                                       updated__month=datetime.now().month, status='2').count,
-        'requests_count' : RequestForChange.objects.filter(status='1').count,
+        'request_count' : RequestForChange.objects.filter(status='1').count,
         'report_count'   : TaskAssign.objects.filter(updated__year=datetime.now().year,updated__month=datetime.now().month).count,
     }    
     return render(request, 'project_manager/index.html', context)
@@ -674,6 +674,7 @@ def request_for_change(request):
         'request_for_changes_pending': request_for_changes_pending,
         'request_for_changes': request_for_changes,
         'employees': employees,
+        'exclude_employee': _5_tasked_employee(),
         'success_message' : success_message,
         'error_message'   : error_message,
     }    
