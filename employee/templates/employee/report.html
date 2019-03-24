@@ -30,13 +30,14 @@
       <h6 class="m-0 font-weight-bold text-primary">Submit Task</h6>
     </a>
     <!-- Card Content - Collapse -->
-    <div class="collapse show" id="collapseCardExample">
+    <div class="collapse no-show" id="collapseCardExample">
       <div class="card-body">
         <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Project Name</th>
+              <th scope="col">Ginven at</th>
               <th scope="col">Deadline</th>
               <th scope="col">See more</th>
             </tr>
@@ -46,6 +47,7 @@
               <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ task.project.name }}</td>
+                <td>{{ task.updated }}</td>
                 <td>{{ task.deadline }}</td>	
                 <td>
                   <!-- Button trigger modal -->
