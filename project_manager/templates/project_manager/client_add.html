@@ -59,7 +59,7 @@
                 {% csrf_token %}
                   <div class="form-group">
                     <label for="projectName">Company Name</label>
-                    <input type="text" name="client_name" class="form-control" id="clientName" placeholder="Enter Client Name" pattern="[A-Za-z]{3,100}" required>
+                    <input type="text" name="client_name" class="form-control" id="clientName" placeholder="Enter Client Name" pattern="[A-Za-z\s]{3,100}" required>
                     <small id="clientNameHelp" class="form-text text-muted">Company name should unique</small>
                   </div>
                   <div class="form-group">

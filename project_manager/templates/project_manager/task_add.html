@@ -106,8 +106,16 @@
                             <div class="form-group">
                               <label for="possibleBugs">Bugs</label>                                    
                               <select name="bugs" class="custom-select" multiple required>                
-                              {% for bug in project.possible_bugs.all %}
-                                <option value="{{bug.id}}">{{bug.name}}</option>
+                              {% for exclude_bug in exclude_bugs %}                
+                                  {% if exclude_bug.0 == project.id %}  
+                                      {% for bug in project.possible_bugs.all %}                
+                                          {% if bug.id in exclude_bug.1 %}                   
+                                          {% else %}                    
+                                            <option value="{{bug.id}}">{{bug.name}}</option> 
+                                          {% endif %}               
+                                      {% endfor %}                 
+                                  {% else %}               
+                                  {% endif %}                 
                               {% endfor %}                
                               </select>
                             </div>

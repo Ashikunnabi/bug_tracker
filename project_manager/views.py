@@ -487,10 +487,10 @@ def employee_delete(request, id):
 def task_add(request):
     """  SUPERUSER and ADMIN has the power to add new client """
     success_message, error_message = None, None
-    projects  = Project.objects.all()
+    projects  = Project.objects.all()[::-1]
     employees = Employee.objects.all()
     tasks     = TaskAssign.objects.all()
-    bugs      = Bug.objects.all()    
+    bugs      = Bug.objects.all() 
     
     # Catching POST request 
     if request.method == "POST":
@@ -521,6 +521,7 @@ def task_add(request):
         'employees'       : employees,
         'tasks'           : tasks,
         'exclude_employee': _5_tasked_employee(),
+        'exclude_bugs'    : task_assigned(),
         'success_message' : success_message,
         'error_message'   : error_message,
     }
@@ -544,7 +545,30 @@ def _5_tasked_employee():
     return id_list
 
     
+    
+def task_assigned():   
+    """ 
+        This will find projects with assigned bugs to exclude from
+        TaskAssign template so that assigned bugs will removed while
+        showing bugs for specific project.
+    """   
+    bugs_id   = []
+    projects_with_assigned_bugs = []
+    projects = Project.objects.all()
+    
+    for project in projects:               
+      assigned_task = TaskAssign.objects.filter(project__id=project.id)
+      for task in assigned_task: 
+          for bug in task.bugs.all(): 
+              bugs_id.append(bug.id)
+      projects_with_assigned_bugs.append([project.id, bugs_id])
+      bugs_id = []                
+      # print(projects_with_assigned_bugs)
+    return projects_with_assigned_bugs
 
+      
+      
+      
 ## ================= TASK DETAIL - UPDATE ==========================   
 @login_required(login_url='login')
 @has_access(allowed_roles=['superuser', 'admin'])
