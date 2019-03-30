@@ -491,7 +491,7 @@ def employee_delete(request, id):
 def task_add(request):
     """  SUPERUSER and ADMIN has the power to add new client """
     success_message, error_message = None, None
-    projects  = Project.objects.all()[::-1]
+    projects  = Project.objects.filter(status=1)[::-1]
     employees = Employee.objects.all()
     tasks     = TaskAssign.objects.all()
     bugs      = Bug.objects.all() 
