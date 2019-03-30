@@ -624,6 +624,9 @@ def task_delete(request, id):
     success_message, error_message = None, None    
     task  = TaskAssign.objects.get(id=id)
     tasks = TaskAssign.objects.all()
+    projects  = Project.objects.filter(status=1)[::-1]
+    employees = Employee.objects.all()
+    bugs      = Bug.objects.all() 
     
     # Catching POST request 
     if request.method == "POST":
@@ -636,7 +639,11 @@ def task_delete(request, id):
             error_message   = "to delete task." 
     
     context = {
+        'projects'        : projects,
+        'employees'       : employees,
         'tasks'           : tasks,
+        'exclude_employee': _5_tasked_employee(),
+        'exclude_bugs'    : task_assigned(),
         'success_message' : success_message,
         'error_message'   : error_message,
     }    
