@@ -76,10 +76,11 @@ def project_add(request):
 @has_access(allowed_roles=['superuser', 'admin'])
 def project_details(request, id):
     """  Project detail with editible form will be shown """
-    success_message, error_message = None, None    
-    project = Project.objects.get(id=id)
-    bugs    = Bug.objects.all()
-    clients = Client.objects.all()    
+    success_message, error_message = None, None
+    statuses = Project    
+    project  = Project.objects.get(id=id)
+    bugs     = Bug.objects.all()
+    clients  = Client.objects.all()    
     
     # Catching POST request 
     if request.method == "POST":
@@ -91,6 +92,7 @@ def project_details(request, id):
         deadline_date        = request.POST['deadline_date']
         deadline_time        = request.POST['deadline_time']        
         deadline             = deadline_date+" "+deadline_time
+        status               = request.POST['status'] 
         # Creating new project
         try:
             project.client      = Client.objects.get(id=company_name)
@@ -98,6 +100,7 @@ def project_details(request, id):
             project.description = project_description
             project.cost        = testing_cost
             project.deadline    = deadline
+            project.status      = status
             project.possible_bugs.set(possible_bugs)
             project.save()
             success_message     = "project updated."
@@ -106,6 +109,7 @@ def project_details(request, id):
             error_message       = "to update project."
     
     context = {
+        'statuses'        : statuses,
         'project'         : project,
         'bugs'            : bugs,
         'clients'         : clients,

@@ -92,6 +92,18 @@
         <input type="date" name="deadline_date" class="form-control" id="examplePossibleBugs" value="{{project.deadline|date:'Y-m-d'}}" required></br>
         <input type="time" name="deadline_time" class="form-control" id="examplePossibleBugs" value="{{project.deadline|time:'h:i'}}" required>
       </div>
+      <div class="form-group">
+        <label for="possibleBugs">Action</label>                                    
+        <select name="status" class="custom-select">                
+        {% for key, status in statuses.STATUS %}
+        {% if project.status in key %}
+          <option value="{{key}}" selected>{{status}}</option>
+        {% else %}
+          <option value="{{key}}">{{status}}</option>
+        {% endif %}                
+        {% endfor %}                
+        </select>
+      </div> 
       <button type="submit" class="btn btn-primary" style="float:right">Save change</button>
     </form>
     
