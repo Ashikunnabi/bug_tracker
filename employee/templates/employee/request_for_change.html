@@ -112,7 +112,7 @@
                               <input type="text" name="deadline_time" class="form-control" value="{{task.deadline|time}}">
                             </div> 
                             <div class="form-group">
-                              <label for="possibleBugs">Bugs</label>                                    
+                              <label for="possibleBugs">Penalty Method</label>                                    
                               <select name="penalty" class="custom-select">                
                               {% for key, penalty in request_penalty_methods.PENALTY %}
                                 <option value="{{key}}">{{penalty}}</option>
