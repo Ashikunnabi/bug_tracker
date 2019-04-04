@@ -10,33 +10,33 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bug Tracker</title>
+    <title>Sufee Admin - HTML5 Admin Template</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" href="{% static 'project_manager/images/apple-icon.png '%}">
-    <link rel="shortcut icon" href="{% static 'project_manager/images/favicon.ico '%}">
-    <link rel="stylesheet" href="{% static 'project_manager/vendors/bootstrap/dist/css/bootstrap.min.css '%}">
+    <link rel="apple-touch-icon" href="{% static 'project_manager/images/apple-icon.png' %}">
+    <link rel="shortcut icon" href="{% static 'project_manager/images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'project_manager/vendors/bootstrap/dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'project_manager/vendors/font-awesome/css/font-awesome.min.css '%}">
-    <link rel="stylesheet" href="{% static 'project_manager/vendors/themify-icons/css/themify-icons.css '%}">
-    <link rel="stylesheet" href="{% static 'project_manager/vendors/flag-icon-css/css/flag-icon.min.css '%}">
-    <link rel="stylesheet" href="{% static 'project_manager/vendors/selectFX/css/cs-skin-elastic.css '%}">
+    <link rel="stylesheet" href="{% static 'project_manager/vendors/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'project_manager/vendors/themify-icons/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'project_manager/vendors/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel="stylesheet" href="{% static 'project_manager/vendors/selectFX/css/cs-skin-elastic.css' %}">
     <link rel="stylesheet" href="{% static 'project_manager/vendors/jqvmap/dist/jqvmap.min.css">
-    <link rel="stylesheet" href="{% static 'project_manager/assets/css/style.css '%}">
+    <link rel="stylesheet" href="{% static 'project_manager/assets/css/style.css' %}">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 </head>
 
 <body>    
     <!-- ========= Left Panel ============ -->
-      {% include 'project_manager/_left_sidebar.html' %}
+      {% include 'employee/_left_sidebar.html' %}
     <!-- ========== /Left Panel ============ -->
 
     
     <!-- ============ Right Panel ============= -->
     <div id="right-panel" class="right-panel">
         <!-- ========== Header ===========-->
-          {% include 'project_manager/_header.html' %}        
+          {% include 'employee/_header.html' %}        
         <!-- ============= /Header========-->
         <!-- ============= Content========-->        
           {% block content %}{% endblock %}
@@ -44,18 +44,16 @@
     </div><!-- /#right-panel -->
     <!-- ============ /ight Panel ============= -->
 
-    <script src="{% static 'project_manager/vendors/jquery/dist/jquery.min.js '%}"></script>
-    <script src="{% static 'project_manager/vendors/popper.js/dist/umd/popper.min.js '%}"></script>
-    <script src="{% static 'project_manager/vendors/bootstrap/dist/js/bootstrap.min.js '%}"></script>
-    <script src="{% static 'project_manager/assets/js/main.js '%}"></script>
-
-
-    <script src="{% static 'project_manager/vendors/chart.js/dist/Chart.bundle.min.js '%}"></script>
-    <script src="{% static 'project_manager/assets/js/dashboard.js '%}"></script>
-    <script src="{% static 'project_manager/assets/js/widgets.js '%}"></script>
-    <script src="{% static 'project_manager/vendors/jqvmap/dist/jquery.vmap.min.js '%}"></script>
-    <script src="{% static 'project_manager/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js '%}"></script>
-    <script src="{% static 'project_manager/vendors/jqvmap/dist/maps/jquery.vmap.world.js '%}"></script>
+    <script src="{% static 'project_manager/vendors/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'project_manager/vendors/popper.js/dist/umd/popper.min.js' %}"></script>
+    <script src="{% static 'project_manager/vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'project_manager/assets/js/main.js ' %}"></script>
+    <script src="{% static 'project_manager/vendors/chart.js/dist/Chart.bundle.min.js' %}"></script>
+    <script src="{% static 'project_manager/assets/js/dashboard.js' %}"></script>
+    <script src="{% static 'project_manager/assets/js/widgets.js' %}"></script>
+    <script src="{% static 'project_manager/vendors/jqvmap/dist/jquery.vmap.min.js' %}"></script>
+    <script src="{% static 'project_manager/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js' %}"></script>
+    <script src="{% static 'project_manager/vendors/jqvmap/dist/maps/jquery.vmap.world.js' %}"></script>
     <script>
         (function ($) {
             "use strict";
