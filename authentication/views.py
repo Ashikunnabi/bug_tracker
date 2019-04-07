@@ -85,7 +85,7 @@ def send_email(email):
     send_mail(
         'Bug Tracker - Forgot Password',
         'Here is the Security Code: '+code+'. Do not share the code. Do not replay.',
-        'ashiktuhin12@gmail.com',
+        credentials.email,
         [email],
         fail_silently=False,
     ) 
