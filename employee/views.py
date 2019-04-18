@@ -11,13 +11,24 @@ from authentication.decorators import has_access
 @login_required(login_url='login')
 @has_access(allowed_roles=['employee'])
 def index(request):
-    """  EMPLOYEE has the power to see """  
+    """  EMPLOYEE has the power to see """ 
+    
+    # counting the projects that has assigned for the employee from joining to till now
+    assigned_project_id = set()
+    tasks_assigned = TaskAssign.objects.filter(employee__employee_id=request.user.username) 
+    for task in tasks_assigned:    
+        assigned_project_id.add(task.project.id)
+    
+    # report count
+    completed_task = TaskAssign.objects.filter(employee__employee_id=request.user.username, status='1',).count()
+    failed_task = TaskAssign.objects.filter(employee__employee_id=request.user.username, status='3').count()
+    total_report = completed_task + failed_task
     context = {
-        'project_count' : Project.objects.all().count,
-        'client_count'  : Client.objects.all().count,
-        'employee_count': Employee.objects.all().count,
-        'penalty_count' : RequestForChange.objects.filter(task__employee__employee_id=request.user.username).count,
-    }    
+        'project_count' : len(assigned_project_id),
+        'penalty_count' : RequestForChange.objects.filter(task__employee__employee_id=request.user.username, status='2').count,
+        'report_count'  : total_report,
+    }   
+    
     return render(request, 'employee/index.html', context)
 
     
