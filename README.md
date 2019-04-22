@@ -33,7 +33,6 @@ Go to Base Directory
 
 * **Md. Ashikun Nabi** - [See Detail](https://ashikunnabi.pythonanywhere.com/)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
