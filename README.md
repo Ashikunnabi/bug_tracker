@@ -22,11 +22,11 @@ A step by step series of examples that tell you how to get a development env run
 Say what the step will be
 
 ```
-*Create virtual environment - virtualenv venv
-*Run virtual environment
-*Install Django             - pip install django==2.1.7
-*Go to Base Directory
-*   write command           - python manage.py runserver
+Create virtual environment - virtualenv venv
+Run virtual environment
+Install Django             - pip install django==2.1.7
+Go to Base Directory
+   write command           - python manage.py runserver
 ```
 
 ## Authors
